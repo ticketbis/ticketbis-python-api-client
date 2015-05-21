@@ -1,0 +1,28 @@
+.DS_Store
+
+#Pypi
+/bin
+/build
+/dist
+/include
+/lib
+/man
+
+# Do not wants
+*.py[c|o]
+*.egg-info
+*.swp
+.coverage
+.Python
+pip-selfcheck.json
+
+# Ruby specific (for Travis)
+.rvmrc
+.ruby-gemset
+.ruby-version
+
+# IDEs
+.idea
+.project
+*.iml
+

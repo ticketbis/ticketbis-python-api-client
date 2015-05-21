@@ -1,0 +1,60 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+# (c) 2015 Ticketbis
+
+import os
+import unittest
+
+import ticketbis
+
+if 'CLIENT_ID' in os.environ and 'CLIENT_SECRET' in os.environ and 'ACCESS_TOKEN' in os.environ:
+    CLIENT_ID = os.environ['CLIENT_ID']
+    CLIENT_SECRET = os.environ['CLIENT_SECRET']
+    ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
+else:
+    try:
+        from ticketbis.tests._creds import *
+    except ImportError:
+        print("Please create a creds.py file in this package, based upon creds.example.py")
+
+
+TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'testdata')
+
+
+class BaseEndpointTestCase(unittest.TestCase):
+    default_eventid = u'72326'
+
+class BaseAuthenticationTestCase(BaseEndpointTestCase):
+    def setUp(self):
+        self.api = ticketbis.Ticketbis(
+            client_id=CLIENT_ID,
+            client_secret=CLIENT_SECRET,
+            redirect_uri='http://ticketbis.com'
+        )
+
+class BaseAuthenticatedEndpointTestCase(BaseEndpointTestCase):
+    def setUp(self):
+        self.api = ticketbis.Ticketbis(
+#            client_id=CLIENT_ID,
+#            client_secret=CLIENT_SECRET,
+            access_token=ACCESS_TOKEN
+        )
+
+class BaseUserlessEndpointTestCase(BaseEndpointTestCase):
+    def setUp(self):
+        self.api = ticketbis.Ticketbis(
+            client_id=CLIENT_ID,
+            client_secret=CLIENT_SECRET
+        )
+
+class MultilangEndpointTestCase(BaseEndpointTestCase):
+    def setUp(self):
+        self.apis = []
+        for lang in ('es', 'fr', 'de', 'it', 'ja', 'th', 'ko', 'ru', 'pt', 'id'):
+            self.apis.append(
+                ticketbis.Ticketbis(
+                    client_id=CLIENT_ID,
+                    client_secret=CLIENT_SECRET,
+                    lang=lang
+                )
+            )
