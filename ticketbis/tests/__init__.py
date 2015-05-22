@@ -22,7 +22,8 @@ TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'testdata')
 
 
 class BaseEndpointTestCase(unittest.TestCase):
-    default_eventid = u'72326'
+    default_event_id = u'72326'
+    default_category_id = u'2'
 
 class BaseAuthenticationTestCase(BaseEndpointTestCase):
     def setUp(self):

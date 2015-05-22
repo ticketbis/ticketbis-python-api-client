@@ -130,6 +130,22 @@ class Ticketbis(object):
         return self.base_requester.rate_limit
 
     @property
+    def total_count(self):
+        """Returns the total count of items when listing"""
+        return self.base_requester.total_count
+
+    @property
+    def page_offset(self):
+        """Returns current offset when listing"""
+        return self.base_requester.page_offset
+
+    @property
+    def page_max(self):
+        """Returns the max items per page when listing"""
+        return self.base_requester.page_max
+
+
+    @property
     def rate_remaining(self):
         """Returns the remaining rate limit for the last API call i.e. X-RateLimit-Remaining"""
         return self.base_requester.rate_remaining
@@ -180,6 +196,12 @@ class Ticketbis(object):
             self.multi_requests = list()
             self.rate_limit = None
             self.rate_remaining = None
+            self.rate_remaining = None
+
+            """ pagination """
+            self.total_count = None
+            self.page_offset = None
+            self.page_max = None
 
         def set_token(self, access_token):
             """Set the OAuth token for this requester"""
@@ -202,6 +224,15 @@ class Ticketbis(object):
             result = _get(url, headers=headers, params=params)
             self.rate_limit = result['headers']['X-RateLimit-Limit']
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
+            if 'X-ticketbis-totalCount' in result['headers']:
+                self.total_count = int(result['headers']['X-ticketbis-totalCount'])
+                self.page_offset = int(result['headers']['X-ticketbis-pageOffset'])
+                self.page_max = int(result['headers']['X-ticketbis-pageMaxSize'])
+            else:
+                self.total_count = None
+                self.page_offset = None
+                self.page_max = None
+
             return result['data']
 
         def add_multi_request(self, path, params={}):
@@ -274,26 +305,19 @@ class Ticketbis(object):
 
 
     class Events(_Endpoint):
-        """Event specific endpoint"""
         endpoint = 'events'
 
-        def __call__(self, EVENT_ID=u'self', multi=False):
-            """https://developer.ticketbis.com/docs/events"""
-            return self.GET('{EVENT_ID}'.format(EVENT_ID=EVENT_ID), multi=multi)
+        def __call__(self, event_id=u'', params={}, multi=False):
+            return self.GET('{0}'.format(event_id), params=params, multi=multi)
 
-#        """
-#        General
-#        """
-#        def leaderboard(self, params={}, multi=False):
-#            """https://developer.ticketbis.com/docs/users/leaderboard"""
-#            return self.GET('leaderboard', params, multi=multi)
-#
-#        """
-#        Actions
-#        """
-#        def approve(self, USER_ID):
-#            """https://developer.ticketbis.com/docs/users/approve"""
-#            return self.POST('{USER_ID}/approve'.format(USER_ID=USER_ID))
+    class Categories(_Endpoint):
+        endpoint = 'categories'
+
+        def __call__(self, category_id=u'', params={}, multi=False):
+            return self.GET('{0}'.format(category_id), params=params, multi=multi)
+
+        def events(self, category_id, params={}, multi=False):
+            return self.GET('{0}/events'.format(category_id), params=params, multi=multi)
 
     class Multi(_Endpoint):
         """Multi request endpoint handler"""

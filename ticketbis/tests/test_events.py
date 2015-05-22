@@ -12,35 +12,16 @@ class EventsEndpointTestCase(BaseAuthenticatedEndpointTestCase):
     General
     """
     def test_event(self):
-        response = self.api.events(self.default_eventid)
-        #response = self.api.events()
+        response = self.api.events(self.default_event_id)
         assert 'name' in response
 
-#    def test_leaderboard(self):
-#        response = self.api.users.leaderboard()
-#        assert 'leaderboard' in response
-#
-#    def test_search_twitter(self):
-#        response = self.api.users.search(params={'twitter': u'mLewisLogic'})
-#        assert 'results' in response
-#
-#    """
-#    Aspects
-#    """
-#    def test_badges(self):
-#        response = self.api.users.badges()
-#        assert 'sets' in response
-#        assert 'badges' in response
-#
-#    """
-#    Actions
-#    """
-#    def test_update_name(self):
-#        # Change my name to Miguel
-#        response = self.api.users.update(params={'firstName': 'Miguel'})
-#        assert 'user' in response
-#        assert response['user']['firstName'] == 'Miguel'
-#        # Change it back
-#        response = self.api.users.update(params={'firstName': 'Mike'})
-#        assert 'user' in response
-#        assert response['user']['firstName'] == 'Mike'
+    def test_events(self):
+        response = self.api.events(params={'max': 2, 'offset': 0})
+        assert 'name' in response[0]
+        assert self.api.page_max == 2
+        assert self.api.page_offset == 0
+
+    def test_events_by_category(self):
+        response = self.api.categories.events(self.default_category_id, 
+                params={'max': 2, 'offset': 0})
+        assert 'name' in response[0]
