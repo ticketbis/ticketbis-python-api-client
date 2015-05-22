@@ -25,3 +25,9 @@ class EventsEndpointTestCase(BaseAuthenticatedEndpointTestCase):
         response = self.api.categories.events(self.default_category_id, 
                 params={'max': 2, 'offset': 0})
         assert 'name' in response[0]
+
+    def test_event_pagination(self):
+        response = self.api.events(auto_pagination=True, params={'max': 1})
+        r = next(response)
+        r = next(response)
+        assert 'name' in r

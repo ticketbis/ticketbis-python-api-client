@@ -221,7 +221,34 @@ class Ticketbis(object):
                 API_ENDPOINT=API_ENDPOINT,
                 path=path
             )
+
             result = _get(url, headers=headers, params=params)
+            self._set_header_properties(result)
+
+            return result['data']
+
+        def GET_PAGINATED(self, path, params={}, **kwargs):
+            """GET request that returns processed data iterating over pagination"""
+            params = params.copy()
+
+            headers = self._create_headers()
+            params = self._enrich_params(params)
+            url = '{API_ENDPOINT}{path}'.format(
+                API_ENDPOINT=API_ENDPOINT,
+                path=path
+            )
+
+            pending_pages = True
+            while pending_pages:
+                result = _get(url, headers=headers, params=params)
+                self._set_header_properties(result)
+                pending_pages = self.page_offset + len(result['data']) < self.total_count
+                params['offset'] = self.page_offset + self.page_max
+                print self.page_offset, len(result['data']), self.total_count
+                for r in result['data']:
+                    yield r
+
+        def _set_header_properties(self, result):
             self.rate_limit = result['headers']['X-RateLimit-Limit']
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
             if 'X-ticketbis-totalCount' in result['headers']:
@@ -232,8 +259,6 @@ class Ticketbis(object):
                 self.total_count = None
                 self.page_offset = None
                 self.page_max = None
-
-            return result['data']
 
         def add_multi_request(self, path, params={}):
             """Add multi request to list and return the number of requests added"""
@@ -295,9 +320,13 @@ class Ticketbis(object):
                 expanded_path='/'.join(p for p in (self.endpoint, path) if p)
             )
 
-        def GET(self, path=None, *args, **kwargs):
+        def GET(self, path=None, auto_pagination=False, *args, **kwargs):
             """Use the requester to get the data"""
-            return self.requester.GET(self._expanded_path(path), *args, **kwargs)
+            if not auto_pagination:
+                return self.requester.GET(self._expanded_path(path), *args, **kwargs)
+            else:
+                return self.requester.GET_PAGINATED(self._expanded_path(path), 
+                    *args, **kwargs)
 
         def POST(self, path=None, *args, **kwargs):
             """Use the requester to post the data"""
@@ -307,17 +336,20 @@ class Ticketbis(object):
     class Events(_Endpoint):
         endpoint = 'events'
 
-        def __call__(self, event_id=u'', params={}, multi=False):
-            return self.GET('{0}'.format(event_id), params=params, multi=multi)
+        def __call__(self, event_id=u'', auto_pagination=False, params={}, multi=False):
+            return self.GET('{0}'.format(event_id), auto_pagination, 
+                   params=params, multi=multi)
 
     class Categories(_Endpoint):
         endpoint = 'categories'
 
-        def __call__(self, category_id=u'', params={}, multi=False):
-            return self.GET('{0}'.format(category_id), params=params, multi=multi)
+        def __call__(self, category_id=u'', auto_pagination=False, params={}, multi=False):
+            return self.GET('{0}'.format(category_id), auto_pagination,
+                   params=params, multi=multi)
 
-        def events(self, category_id, params={}, multi=False):
-            return self.GET('{0}/events'.format(category_id), params=params, multi=multi)
+        def events(self, category_id, auto_pagination=False, params={}, multi=False):
+            return self.GET('{0}/events'.format(category_id), auto_pagination, 
+                   params=params, multi=multi)
 
     class Multi(_Endpoint):
         """Multi request endpoint handler"""
