@@ -244,7 +244,6 @@ class Ticketbis(object):
                 self._set_header_properties(result)
                 pending_pages = self.page_offset + len(result['data']) < self.total_count
                 params['offset'] = self.page_offset + self.page_max
-                print self.page_offset, len(result['data']), self.total_count
                 for r in result['data']:
                     yield r
 
