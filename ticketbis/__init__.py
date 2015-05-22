@@ -54,7 +54,7 @@ if NETWORK_DEBUG:
 API_VERSION_YEAR  = '2015'
 API_VERSION_MONTH = '06'
 API_VERSION_DAY   = '01'
-API_VERSION = '{year}{month}{day}'.format(year=API_VERSION_YEAR, month=API_VERSION_MONTH, day=API_VERSION_DAY)
+API_VERSION = 1
 
 # Library versioning matches supported ticketbis API version
 __version__ = '1!{year}.{month}.{day}'.format(year=API_VERSION_YEAR, month=API_VERSION_MONTH, day=API_VERSION_DAY)
@@ -85,7 +85,6 @@ class RateLimitExceeded(TicketbisException): pass
 class Deprecated(TicketbisException): pass
 class ServerError(TicketbisException): pass
 class FailedGeocode(TicketbisException): pass
-class GeocodeTooBig(TicketbisException): pass
 class Other(TicketbisException): pass
 
 error_types = {
@@ -97,7 +96,6 @@ error_types = {
     'deprecated': Deprecated,
     'server_error': ServerError,
     'failed_geocode': FailedGeocode,
-    'geocode_too_big': GeocodeTooBig,
     'other': Other,
 }
 
@@ -177,7 +175,7 @@ class Ticketbis(object):
             self.client_id = client_id
             self.client_secret = client_secret
             self.set_token(access_token)
-            self.version = version if version else API_VERSION
+            self.version = version or API_VERSION
             self.lang = lang
             self.multi_requests = list()
             self.rate_limit = None
@@ -235,18 +233,19 @@ class Ticketbis(object):
 
         def _enrich_params(self, params):
             """Enrich the params dict"""
-            if self.version:
-                params['v'] = self.version
             if self.userless:
                 params['client_id'] = self.client_id
                 params['client_secret'] = self.client_secret
-            else:
-                params['oauth_token'] = self.oauth_token
             return params
 
         def _create_headers(self):
             """Get the headers we need"""
-            headers = {}
+            headers = {
+                'Accept': 'application/vnd.ticketbis.v{0}+json, application/json'.format(self.version)
+            }
+
+            if not self.userless:
+                headers['Authorization'] = 'Bearer {0}'.format(self.oauth_token)
             # If we specified a specific language, use that
             if self.lang:
                 headers['Accept-Language'] = self.lang
