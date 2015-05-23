@@ -22,15 +22,20 @@ TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'testdata')
 
 
 class BaseEndpointTestCase(unittest.TestCase):
+    default_site_name = 'ticketbisES'
     default_event_id = u'72326'
     default_category_id = u'2'
+    default_site_id = u'1'
+    default_venue_id = u'1'
+    default_schema_id = u'1'
 
 class BaseAuthenticationTestCase(BaseEndpointTestCase):
     def setUp(self):
         self.api = ticketbis.Ticketbis(
             client_id=CLIENT_ID,
             client_secret=CLIENT_SECRET,
-            redirect_uri='http://ticketbis.com'
+            redirect_uri='http://ticketbis.com',
+            site=self.default_site_name
         )
 
 class BaseAuthenticatedEndpointTestCase(BaseEndpointTestCase):
@@ -38,14 +43,16 @@ class BaseAuthenticatedEndpointTestCase(BaseEndpointTestCase):
         self.api = ticketbis.Ticketbis(
 #            client_id=CLIENT_ID,
 #            client_secret=CLIENT_SECRET,
-            access_token=ACCESS_TOKEN
+            access_token=ACCESS_TOKEN,
+            site=self.default_site_name
         )
 
 class BaseUserlessEndpointTestCase(BaseEndpointTestCase):
     def setUp(self):
         self.api = ticketbis.Ticketbis(
             client_id=CLIENT_ID,
-            client_secret=CLIENT_SECRET
+            client_secret=CLIENT_SECRET,
+            site=self.default_site_name
         )
 
 class MultilangEndpointTestCase(BaseEndpointTestCase):

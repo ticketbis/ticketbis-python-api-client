@@ -37,11 +37,11 @@ except ImportError:
 # Helpful for debugging what goes in and out
 NETWORK_DEBUG = False
 if NETWORK_DEBUG:
-    # These two lines enable debugging at httplib level (requests->urllib3->httplib)
-    # You will see the REQUEST, including HEADERS and DATA, and RESPONSE with HEADERS but without DATA.
+    # Enables debugging at httplib level (requests->urllib3->httplib)
     # The only thing missing will be the response.body which is not logged.
     import httplib
     httplib.HTTPConnection.debuglevel = 1
+
     # You must initialize logging, otherwise you'll not see debug output.
     logging.basicConfig()
     logging.getLogger().setLevel(logging.DEBUG)
@@ -50,14 +50,15 @@ if NETWORK_DEBUG:
     requests_log.propagate = True
 
 
-# Default API version. Move this forward as the library is maintained and kept current
+# Default API version. 
 API_VERSION_YEAR  = '2015'
 API_VERSION_MONTH = '06'
 API_VERSION_DAY   = '01'
 API_VERSION = 1
 
 # Library versioning matches supported ticketbis API version
-__version__ = '1!{year}.{month}.{day}'.format(year=API_VERSION_YEAR, month=API_VERSION_MONTH, day=API_VERSION_DAY)
+__version__ = '1!{year}.{month}.{day}'.format(year=API_VERSION_YEAR, 
+        month=API_VERSION_MONTH, day=API_VERSION_DAY)
 __author__ = u'Jose Gargallo'
 
 AUTH_ENDPOINT = 'http://api.ticketbis.com.local:8000/oauth/authorize'
@@ -74,9 +75,8 @@ MAX_MULTI_REQUESTS = 5
 VERIFY_SSL = True
 
 
-# Generic ticketbis exception
+# Exceptions
 class TicketbisException(Exception): pass
-# Specific exceptions
 class InvalidAuth(TicketbisException): pass
 class ParamError(TicketbisException): pass
 class EndpointError(TicketbisException): pass
@@ -102,21 +102,30 @@ error_types = {
 
 
 class Ticketbis(object):
-    """Ticketbis V1 API wrapper"""
+    """Ticketbis API wrapper"""
 
-    def __init__(self, client_id=None, client_secret=None, access_token=None, redirect_uri=None, version=None, lang=None):
+    def __init__(self, client_id=None, client_secret=None, access_token=None,
+            redirect_uri=None, version=None, site=None, lang='en-gb'):
         """Sets up the api object"""
-        # Set up OAuth
         self.oauth = self.OAuth(client_id, client_secret, redirect_uri)
         # Set up endpoints
-        self.base_requester = self.Requester(client_id, client_secret, access_token, version, lang)
+        self.base_requester = self.Requester(client_id, client_secret,
+                access_token, version, site, lang)
+
         # Dynamically enable endpoints
         self._attach_endpoints()
+
+        # resolves site
+        if not site:
+            # forces API to return site according to lang 
+            # (gets site from response header)
+            self.sites(params={'max': 1})
 
     def _attach_endpoints(self):
         """Dynamically attach endpoint callables to this client"""
         for name, endpoint in inspect.getmembers(self):
-            if inspect.isclass(endpoint) and issubclass(endpoint, self._Endpoint) and (endpoint is not self._Endpoint):
+            if inspect.isclass(endpoint) and issubclass(endpoint, 
+                    self._Endpoint) and (endpoint is not self._Endpoint):
                 endpoint_instance = endpoint(self.base_requester)
                 setattr(self, endpoint_instance.endpoint, endpoint_instance)
 
@@ -126,7 +135,7 @@ class Ticketbis(object):
 
     @property
     def rate_limit(self):
-        """Returns the maximum rate limit for the last API call i.e. X-RateLimit-Limit"""
+        """Returns the maximum rate limit for the last API call"""
         return self.base_requester.rate_limit
 
     @property
@@ -144,10 +153,18 @@ class Ticketbis(object):
         """Returns the max items per page when listing"""
         return self.base_requester.page_max
 
+    @property
+    def site(self):
+        """Returns site name"""
+        return self.base_requester.site
+
 
     @property
     def rate_remaining(self):
-        """Returns the remaining rate limit for the last API call i.e. X-RateLimit-Remaining"""
+        """
+        Returns the remaining rate limit for the last API call 
+        i.e. X-RateLimit-Remaining
+        """
         return self.base_requester.rate_remaining
 
     class OAuth(object):
@@ -186,12 +203,14 @@ class Ticketbis(object):
 
     class Requester(object):
         """Api requesting object"""
-        def __init__(self, client_id=None, client_secret=None, access_token=None, version=None, lang=None):
+        def __init__(self, client_id=None, client_secret=None, 
+                access_token=None, version=None, site=None, lang=None):
             """Sets up the api object"""
             self.client_id = client_id
             self.client_secret = client_secret
             self.set_token(access_token)
             self.version = version or API_VERSION
+            self.site = site
             self.lang = lang
             self.multi_requests = list()
             self.rate_limit = None
@@ -228,7 +247,7 @@ class Ticketbis(object):
             return result['data']
 
         def GET_PAGINATED(self, path, params={}, **kwargs):
-            """GET request that returns processed data iterating over pagination"""
+            """GET request that returns data iterating over pagination"""
             params = params.copy()
 
             headers = self._create_headers()
@@ -242,29 +261,34 @@ class Ticketbis(object):
             while pending_pages:
                 result = _get(url, headers=headers, params=params)
                 self._set_header_properties(result)
-                pending_pages = self.page_offset + len(result['data']) < self.total_count
+                pending_pages = \
+                    self.page_offset + len(result['data']) < self.total_count
                 params['offset'] = self.page_offset + self.page_max
                 for r in result['data']:
                     yield r
 
         def _set_header_properties(self, result):
+            self.site = result['headers']['X-ticketbis-site']
+
             self.rate_limit = result['headers']['X-RateLimit-Limit']
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
+            
             if 'X-ticketbis-totalCount' in result['headers']:
-                self.total_count = int(result['headers']['X-ticketbis-totalCount'])
-                self.page_offset = int(result['headers']['X-ticketbis-pageOffset'])
-                self.page_max = int(result['headers']['X-ticketbis-pageMaxSize'])
+                self.total_count = \
+                    int(result['headers']['X-ticketbis-totalCount'])
+                self.page_offset = \
+                    int(result['headers']['X-ticketbis-pageOffset'])
+                self.page_max = \
+                    int(result['headers']['X-ticketbis-pageMaxSize'])
             else:
                 self.total_count = None
                 self.page_offset = None
                 self.page_max = None
 
         def add_multi_request(self, path, params={}):
-            """Add multi request to list and return the number of requests added"""
+            """Add multi request to list and return number of requests added"""
             url = path
             if params:
-                # First convert the params into a query string then quote the whole string
-                # so it will fit into the multi request query -as a value for the requests= query param-
                 url += '?{0}'.format(parse.quote_plus(parse.urlencode(params)))
             self.multi_requests.append(url)
             return len(self.multi_requests)
@@ -295,14 +319,16 @@ class Ticketbis(object):
 
         def _create_headers(self):
             """Get the headers we need"""
+            api_v = 'application/vnd.ticketbis.v{0}+json'.format(self.version)
             headers = {
-                'Accept': 'application/vnd.ticketbis.v{0}+json, application/json'.format(self.version)
+                'Accept': '{0}, application/json'.format(api_v)
             }
 
             if not self.userless:
                 headers['Authorization'] = 'Bearer {0}'.format(self.oauth_token)
-            # If we specified a specific language, use that
-            if self.lang:
+            if self.site:
+                headers['X-ticketbis-site'] = self.site
+            elif self.lang:
                 headers['Accept-Language'] = self.lang
             return headers
 
@@ -322,33 +348,62 @@ class Ticketbis(object):
         def GET(self, path=None, auto_pagination=False, *args, **kwargs):
             """Use the requester to get the data"""
             if not auto_pagination:
-                return self.requester.GET(self._expanded_path(path), *args, **kwargs)
+                return self.requester.GET(self._expanded_path(path), 
+                        *args, **kwargs)
             else:
                 return self.requester.GET_PAGINATED(self._expanded_path(path), 
                     *args, **kwargs)
 
         def POST(self, path=None, *args, **kwargs):
             """Use the requester to post the data"""
-            return self.requester.POST(self._expanded_path(path), *args, **kwargs)
-
+            return self.requester.POST(self._expanded_path(path), 
+                    *args, **kwargs)
 
     class Events(_Endpoint):
         endpoint = 'events'
 
-        def __call__(self, event_id=u'', auto_pagination=False, params={}, multi=False):
+        def __call__(self, event_id=u'', auto_pagination=False, 
+                params={}, multi=False):
             return self.GET('{0}'.format(event_id), auto_pagination, 
                    params=params, multi=multi)
 
     class Categories(_Endpoint):
         endpoint = 'categories'
 
-        def __call__(self, category_id=u'', auto_pagination=False, params={}, multi=False):
+        def __call__(self, category_id=u'', auto_pagination=False,
+                params={}, multi=False):
             return self.GET('{0}'.format(category_id), auto_pagination,
                    params=params, multi=multi)
 
-        def events(self, category_id, auto_pagination=False, params={}, multi=False):
+        def events(self, category_id, auto_pagination=False,
+                params={}, multi=False):
             return self.GET('{0}/events'.format(category_id), auto_pagination, 
                    params=params, multi=multi)
+
+    class Sites(_Endpoint):
+        endpoint = 'sites'
+
+        def __call__(self, site_id=u'', auto_pagination=False,
+                params={}, multi=False):
+            return self.GET('{0}'.format(site_id), auto_pagination, 
+                   params=params, multi=multi)
+
+    class Venues(_Endpoint):
+        endpoint = 'venues'
+
+        def __call__(self, venue_id=u'', auto_pagination=False,
+                params={}, multi=False):
+            return self.GET('{0}'.format(venue_id), auto_pagination, 
+                   params=params, multi=multi)
+
+    class Schemas(_Endpoint):
+        endpoint = 'schemas'
+
+        def __call__(self, schema_id=u'', auto_pagination=False,
+                params={}, multi=False):
+            return self.GET('{0}'.format(schema_id), auto_pagination, 
+                   params=params, multi=multi)
+
 
     class Multi(_Endpoint):
         """Multi request endpoint handler"""
@@ -362,7 +417,7 @@ class Ticketbis(object):
             Generator to process the current queue of multi's
 
             note: This generator will yield both data and TicketbisException's
-            The code processing this sequence must check the yields for their type.
+            Code processing this sequence must check the yields for their type.
             The exceptions should be handled by the calling code, or raised.
             """
             while self.requester.multi_requests:
@@ -386,7 +441,8 @@ class Ticketbis(object):
         @property
         def num_required_api_calls(self):
             """Returns the expected number of API calls to process"""
-            return int(math.ceil(len(self.requester.multi_requests) / float(MAX_MULTI_REQUESTS)))
+            return int(math.ceil(
+                len(self.requester.multi_requests) / float(MAX_MULTI_REQUESTS)))
 
 def _log_and_raise_exception(msg, data, cls=TicketbisException):
   """Calls log.error() then raises an exception of class cls"""
@@ -405,13 +461,16 @@ def _get(url, headers={}, params=None):
     for i in xrange(NUM_REQUEST_RETRIES):
         try:
             try:
-                response = requests.get(url, headers=headers, params=param_string, verify=VERIFY_SSL)
+                response = requests.get(url, headers=headers,
+                        params=param_string, verify=VERIFY_SSL)
                 return _process_response(response)
             except requests.exceptions.RequestException as e:
-                _log_and_raise_exception('Error connecting with ticketbis API', e)
+                _log_and_raise_exception('Error connecting with ticketbis API', 
+                        e)
         except TicketbisException as e:
             # Some errors don't bear repeating
-            if e.__class__ in [InvalidAuth, ParamError, EndpointError, NotAuthorized, Deprecated]: raise
+            if e.__class__ in [InvalidAuth, ParamError, EndpointError,
+                    NotAuthorized, Deprecated]: raise
             # If we've reached our last try, re-raise
             if ((i + 1) == NUM_REQUEST_RETRIES): raise
         time.sleep(1)
@@ -419,7 +478,8 @@ def _get(url, headers={}, params=None):
 def _post(url, headers={}, data=None, files=None):
     """Tries to POST data to an endpoint"""
     try:
-        response = requests.post(url, headers=headers, data=data, files=files, verify=VERIFY_SSL)
+        response = requests.post(url, headers=headers, data=data, files=files,
+                verify=VERIFY_SSL)
         return _process_response(response)
     except requests.exceptions.RequestException as e:
         _log_and_raise_exception('Error connecting with ticketbis API', e)
@@ -451,7 +511,8 @@ def _raise_error_from_response(data):
         else:
             _log_and_raise_exception('Unknown error. meta', meta)
     else:
-        _log_and_raise_exception('Response format invalid, missing meta property. data', data)
+        _log_and_raise_exception('Invalid format, missing meta property. data',
+                data)
 
 def _as_utf8(s):
     try:
@@ -460,32 +521,16 @@ def _as_utf8(s):
         return unicode(s).encode('utf8')
 
 def _ticketbis_urlencode(query, doseq=0, safe_chars="&/,+"):
-    """Gnarly hack because ticketbis doesn't properly handle standard url encoding"""
-    # Original doc: http://docs.python.org/2/library/urllib.html#urllib.urlencode
-    # Works the same way as urllib.urlencode except two differences -
-    # 1. it uses `quote()` instead of `quote_plus()`
-    # 2. it takes an extra parameter called `safe_chars` which is a string
-    #    having the characters which should not be encoded.
-    #
     # Courtesy of github.com/iambibhas
     if hasattr(query,"items"):
-        # mapping objects
         query = query.items()
     else:
-        # it's a bother at times that strings and string-like objects are
-        # sequences...
         try:
-            # non-sequence items should not work with len()
-            # non-empty strings will fail this
             if len(query) and not isinstance(query[0], tuple):
                 raise TypeError
-            # zero-length sequences of all types will get here and succeed,
-            # but that's a minor nit - since the original implementation
-            # allowed empty dicts that type of behavior probably should be
-            # preserved for consistency
         except TypeError:
             ty,va,tb = sys.exc_info()
-            raise TypeError("not a valid non-string sequence or mapping object").with_traceback(tb)
+            raise TypeError("not valid non-string sequence").with_traceback(tb)
 
     l = []
     if not doseq:
