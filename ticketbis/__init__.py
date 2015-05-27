@@ -19,7 +19,6 @@ import time
 import sys
 
 # 3rd party libraries that might not be present during initial install
-#  but we need to import for the version #
 try:
     import requests
 
@@ -51,14 +50,10 @@ if NETWORK_DEBUG:
 
 
 # Default API version. 
-API_VERSION_YEAR  = '2015'
-API_VERSION_MONTH = '06'
-API_VERSION_DAY   = '01'
 API_VERSION = 1
 
 # Library versioning matches supported ticketbis API version
-__version__ = '1!{year}.{month}.{day}'.format(year=API_VERSION_YEAR, 
-        month=API_VERSION_MONTH, day=API_VERSION_DAY)
+__version__ = '0.1'
 __author__ = u'Jose Gargallo'
 
 AUTH_ENDPOINT = 'http://api.ticketbis.com.local:8000/oauth/authorize'

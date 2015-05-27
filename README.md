@@ -104,103 +104,16 @@ or
 
 
 ### Full endpoint list
-Note: endpoint methods map one-to-one with ticketis' endpoints
-
-    users()
-    users.leaderboard()
-    users.requests()
-    users.search()
-    users.badges()
-    users.checkins()
-    users.all_checkins() [*not a native endpoint*]
-    users.friends()
-    users.lists()
-    users.mayorships()
-    users.photos()
-    users.venuehistory()
-    users.approve()
-    users.deny()
-    users.request()
-    users.setpings()
-    users.unfriend()
-    users.update()
-
-    venues()
-    venues.add()
-    venues.categories()
-    venues.explore()
-    venues.managed()
-    venues.search()
-    venues.suggestcompletion()
-    venues.trending()
-    venues.events()
-    venues.herenow()
-    venues.links()
-    venues.listed()
-    venues.menu()
-    venues.photos()
-    venues.similar()
-    venues.stats()
-    venues.tips()
-    venues.nextvenues()
-    venues.likes()
-    venues.hours()
-    venues.edit()
-    venues.flag()
-    venues.marktodo()
-    venues.proposeedit()
-    venues.setrole()
-
-    checkins()
-    checkins.add()
-    checkins.recent()
-    checkins.addcomment()
-    checkins.addpost()
-    checkins.deletecomment()
-    checkins.reply()
-
-    tips()
-    tips.add()
-    tips.search()
-    tips.done()
-    tips.listed()
-    tips.markdone()
-    tips.marktodo()
-    tips.unmark()
-
-    lists()
-    lists.add()
-    lists.followers()
-    lists.suggestphoto()
-    lists.suggesttip()
-    lists.suggestvenues()
-    lists.additem()
-    lists.deleteitem()
-    lists.follow()
-    lists.moveitem()
-    lists.share()
-    lists.unfollow()
-    lists.update()
-    lists.updateitem()
-
-    photos()
-    photos.add()
-
-    settings()
-    settings.all()
-    settings.set()
-
-    specials()
-    specials.search()
-    specials.add()
-    specials.flag()
+    sites()
 
     events()
-    events.categories()
-    events.search()
 
-    pages()
-    pages.venues()
+    categories()
+    categories.events()
+
+    venues()
+
+    schemas()
 
     multi()
 
@@ -210,16 +123,6 @@ In order to run the tests:
 * Copy `ticketbis/tests/_creds.example.py` to `ticketbis/tests/_creds.py`
 * Fill in your personal credentials to run the tests (`_creds.py` is in .gitignore)
 * Run `nosetests`
-
-
-## Improvements
-What else would you like this library to do? Let me know. Feel free to send pull requests for any improvements you make.
-
-### TODO
-* Bring in new endpoints as they emerge
-* Test coverage for write methods
-* Merchant-specific endpoints (someday)
-
 
 ## License
 MIT License. See LICENSE
