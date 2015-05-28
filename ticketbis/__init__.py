@@ -100,9 +100,11 @@ class Ticketbis(object):
     """Ticketbis API wrapper"""
 
     def __init__(self, client_id=None, client_secret=None, access_token=None,
-            redirect_uri=None, version=None, site=None, lang='en-gb'):
+            redirect_uri=None, version=None, site=None, lang='en-gb',
+            grant_type='authorization_code'):
         """Sets up the api object"""
-        self.oauth = self.OAuth(client_id, client_secret, redirect_uri)
+        self.oauth = self.OAuth(client_id, client_secret,
+                redirect_uri, grant_type)
         # Set up endpoints
         self.base_requester = self.Requester(client_id, client_secret,
                 access_token, version, site, lang)
@@ -164,10 +166,11 @@ class Ticketbis(object):
 
     class OAuth(object):
         """Handles OAuth authentication procedures and helps retrieve tokens"""
-        def __init__(self, client_id, client_secret, redirect_uri):
+        def __init__(self, client_id, client_secret, redirect_uri, grant_type):
             self.client_id = client_id
             self.client_secret = client_secret
             self.redirect_uri = redirect_uri
+            self.grant_type = grant_type
 
         def auth_url(self):
             """Gets the url a user needs to access to give up a user token"""
@@ -180,22 +183,28 @@ class Ticketbis(object):
                 AUTH_ENDPOINT=AUTH_ENDPOINT,
                 params=parse.urlencode(params))
 
-        def get_token(self, code):
+        def get_token(self, code=None, scope='read write'):
             """Gets the auth token from a user's response"""
-            if not code:
-                log.error(u'Code not provided')
-                return None
             params = {
                 'client_id': self.client_id,
                 'client_secret': self.client_secret,
-                'grant_type': u'authorization_code',
-                'redirect_uri': self.redirect_uri,
-                'code': six.u(code),
+                'grant_type': self.grant_type,
             }
+
+            if self.grant_type == 'authorization_code':
+                params['redirect_uri'] = self.redirect_uri
+                if not code:
+                    log.error(u'Code not provided')
+                    return None
+                else:
+                    params['code'] = six.u(code)
+            elif self.grant_type == 'client_credentials':
+                params['scope'] = scope
+
             
             # Get the response from the token uri and attempt to parse
-            return _post(TOKEN_ENDPOINT, data=params)['data']['access_token']
-
+            res = _post(TOKEN_ENDPOINT, data=params)
+            return res['data']['access_token']
 
     class Requester(object):
         """Api requesting object"""
