@@ -536,7 +536,7 @@ def _process_response(response):
         _log_and_raise_exception('Invalid response', response.text)
 
     # Default case, Got proper response
-    if response.status_code == 200:
+    if response.status_code in (200, 201):
         return { 'headers': response.headers, 'data': data }
     return _raise_error_from_response(data)
 
