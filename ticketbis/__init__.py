@@ -315,6 +315,23 @@ class Ticketbis(object):
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
             return result['data']
 
+        def PUT(self, path, data={}, files=None):
+            """PUT request that returns processed data"""
+            if data is not None:
+                data = data.copy()
+            if files is not None:
+                files = files.copy()
+            headers = self._create_headers()
+            data = self._enrich_params(data)
+            url = '{API_ENDPOINT}{path}'.format(
+                API_ENDPOINT=API_ENDPOINT,
+                path=path
+            )
+            result = _put(url, headers=headers, data=data, files=files)
+            self.rate_limit = result['headers']['X-RateLimit-Limit']
+            self.rate_remaining = result['headers']['X-RateLimit-Remaining']
+            return result['data']
+
         def _enrich_params(self, params):
             """Enrich the params dict"""
             if self.userless:
@@ -326,7 +343,8 @@ class Ticketbis(object):
             """Get the headers we need"""
             api_v = 'application/vnd.ticketbis.v{0}+json'.format(self.version)
             headers = {
-                'Accept': '{0}, application/json'.format(api_v)
+                'Accept': '{0}, application/json'.format(api_v),
+                'Content-Type': 'application/json',
             }
 
             if not self.userless:
@@ -350,6 +368,12 @@ class Ticketbis(object):
                 expanded_path='/'.join(p for p in (self.endpoint, path) if p)
             )
 
+        def create(self, params={}):
+            return self.POST('', params)
+
+        def update(self, params={}):
+            return self.PUT('{0}'.format(params['id']), params)
+
         def GET(self, path=None, auto_pagination=False, *args, **kwargs):
             """Use the requester to get the data"""
             if not auto_pagination:
@@ -362,6 +386,11 @@ class Ticketbis(object):
         def POST(self, path=None, *args, **kwargs):
             """Use the requester to post the data"""
             return self.requester.POST(self._expanded_path(path), 
+                    *args, **kwargs)
+
+        def PUT(self, path=None, *args, **kwargs):
+            """Use the requester to put the data"""
+            return self.requester.PUT(self._expanded_path(path), 
                     *args, **kwargs)
 
     class Events(_Endpoint):
@@ -484,6 +513,15 @@ def _post(url, headers={}, data=None, files=None):
     """Tries to POST data to an endpoint"""
     try:
         response = requests.post(url, headers=headers, data=data, files=files,
+                verify=VERIFY_SSL)
+        return _process_response(response)
+    except requests.exceptions.RequestException as e:
+        _log_and_raise_exception('Error connecting with ticketbis API', e)
+
+def _put(url, headers={}, data=None, files=None):
+    """Tries to PUT data to an endpoint"""
+    try:
+        response = requests.put(url, headers=headers, data=data, files=files,
                 verify=VERIFY_SSL)
         return _process_response(response)
     except requests.exceptions.RequestException as e:
