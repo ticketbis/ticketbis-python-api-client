@@ -310,7 +310,7 @@ class Ticketbis(object):
                 API_ENDPOINT=API_ENDPOINT,
                 path=path
             )
-            result = _post(url, headers=headers, data=data, files=files)
+            result = _post(url, headers=headers, data=json.dumps(data), files=files)
             self.rate_limit = result['headers']['X-RateLimit-Limit']
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
             return result['data']
@@ -327,7 +327,7 @@ class Ticketbis(object):
                 API_ENDPOINT=API_ENDPOINT,
                 path=path
             )
-            result = _put(url, headers=headers, data=data, files=files)
+            result = _put(url, headers=headers, data=json.dumps(data), files=files)
             self.rate_limit = result['headers']['X-RateLimit-Limit']
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
             return result['data']
