@@ -56,8 +56,8 @@ API_VERSION = 1
 __version__ = '0.1'
 __author__ = u'Jose Gargallo'
 
-AUTH_ENDPOINT = 'http://api.ticketbis.com.local:8000/oauth/authorize'
-TOKEN_ENDPOINT = 'http://api.ticketbis.com.local:8000/oauth/token'
+AUTH_ENDPOINT = 'http://api.ticketbis.com.local:8000/oauth/authorize/'
+TOKEN_ENDPOINT = 'http://api.ticketbis.com.local:8000/oauth/token/'
 API_ENDPOINT = 'http://api.ticketbis.com.local:8000/'
 
 # Number of times to retry http requests
@@ -111,7 +111,7 @@ class Ticketbis(object):
         self._attach_endpoints()
 
         # resolves site
-        if not site:
+        if not site and access_token:
             # forces API to return site according to lang 
             # (gets site from response header)
             self.sites(params={'max': 1})
@@ -192,8 +192,9 @@ class Ticketbis(object):
                 'redirect_uri': self.redirect_uri,
                 'code': six.u(code),
             }
+            
             # Get the response from the token uri and attempt to parse
-            return _get(TOKEN_ENDPOINT, params=params)['data']['access_token']
+            return _post(TOKEN_ENDPOINT, data=params)['data']['access_token']
 
 
     class Requester(object):

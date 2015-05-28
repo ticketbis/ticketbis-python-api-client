@@ -5,6 +5,7 @@ import logging; log = logging.getLogger(__name__)
 
 from . import BaseAuthenticationTestCase
 import six
+import ticketbis
 
 
 class OAuthEndpointTestCase(BaseAuthenticationTestCase):
