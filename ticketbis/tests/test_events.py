@@ -11,15 +11,15 @@ class EventsEndpointTestCase(BaseAuthenticatedEndpointTestCase):
     """
     General
     """
-    def test_event(self):
-        response = self.api.events(self.default_event_id)
-        assert 'name' in response
 
     def test_events(self):
         response = self.api.events(params={'max': 2, 'offset': 0})
-        assert 'name' in response[0]
+        assert 'id' in response[0]
         assert self.api.page_max == 2
         assert self.api.page_offset == 0
+
+        response = self.api.events(response[0]['id'])
+        assert 'name' in response
 
     def test_events_by_category(self):
         response = self.api.categories.events(self.default_category_id, 

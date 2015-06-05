@@ -23,7 +23,6 @@ TEST_DATA_DIR = os.path.join(os.path.dirname(__file__), 'testdata')
 
 class BaseEndpointTestCase(unittest.TestCase):
     default_site_name = 'ticketbisES'
-    default_event_id = u'72326'
     default_category_id = u'2'
     default_site_id = u'1'
     default_venue_id = u'1'
