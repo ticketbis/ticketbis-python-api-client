@@ -2,16 +2,10 @@
 
 Python wrapper for the [Ticketbis API](http://developer.ticketbis.com/docs/).
 
-Philosophy:
-
-* Map ticketbis's endpoints one-to-one
-* Clean, simple, Pythonic calls
-* Only handle raw data, you define your own models
-
 Features:
 
 * Python 2+3 compatibility
-* OAuth2 dance
+* OAuth2
 * Automatic retries
 
 Dependencies:
@@ -68,55 +62,9 @@ or
 
 ### Examples
 
-#### Users
-##### [Getting your own user object](https://developer.ticketbis.com/docs/users/users)
-    client.users()
-##### [Getting another user](https://developer.ticketbis.com/docs/users/users)
-    client.users('1183247')
-##### [Get your checkins](https://developer.ticketbis.com/docs/users/checkins)
-    client.users.checkins()
-##### [Get your most recent checkin](https://developer.ticketbis.com/docs/users/checkins)
-    client.users.checkins(params={'limit': 1})
-##### Get *all* of your checkins (not a native 4sq call)
-    client.users.all_checkins()
-##### [Approve a friend's friend request](https://developer.ticketbis.com/docs/users/approve)
-    client.users.approve('1183247')
-
 #### Venues
 ##### [Get details about a venue](https://developer.ticketbis.com/docs/venues/venues)
     client.venues('40a55d80f964a52020f31ee3')
-##### [Search for a coffee place](https://developer.ticketbis.com/docs/venues/search)
-    client.venues.search(params={'query': 'coffee'})
-##### [Edit venue details](https://developer.ticketbis.com/docs/venues/edit)
-    client.venues.edit('40a55d80f964a52020f31ee3', params={'description': 'Best restaurant on the city'})
-
-#### Checkins
-##### [Get recent checkins for yourself](https://developer.ticketbis.com/docs/checkins/recent)
-    client.checkins.recent()
-##### [Get recent checkins for a friend](https://developer.ticketbis.com/docs/checkins/recent)
-    client.checkins.recent('1183247')
-
-#### Tips
-##### [Get a specific tip](https://developer.ticketbis.com/docs/tips/tips)
-    client.tips('4b5e662a70c603bba7d790b4')
-##### [Search for a tip](https://developer.ticketbis.com/docs/tips/search)
-    client.tips.search(params={'query': 'donuts'})
-
-
-### Full endpoint list
-    sites()
-
-    events()
-
-    categories()
-    categories.events()
-
-    venues()
-
-    schemas()
-
-    multi()
-
 
 ### Testing
 In order to run the tests:
