@@ -56,9 +56,9 @@ API_VERSION = 1
 __version__ = '0.1'
 __author__ = u'Jose Gargallo'
 
-AUTH_ENDPOINT = 'http://api.ticketbis.com.local:8000/oauth/authorize/'
-TOKEN_ENDPOINT = 'http://api.ticketbis.com.local:8000/oauth/token/'
-API_ENDPOINT = 'http://api.ticketbis.com.local:8000/'
+API_ENDPOINT = 'https://api.ticketbis.com/'
+AUTH_ENDPOINT = 'oauth/authorize/'
+TOKEN_ENDPOINT = 'oauth/token/'
 
 # Number of times to retry http requests
 NUM_REQUEST_RETRIES = 1
@@ -101,12 +101,12 @@ class Ticketbis(object):
 
     def __init__(self, client_id=None, client_secret=None, access_token=None,
             redirect_uri=None, version=None, site=None, lang='en-gb',
-            grant_type='authorization_code'):
+            grant_type='authorization_code', api_endpoint=API_ENDPOINT):
         """Sets up the api object"""
-        self.oauth = self.OAuth(client_id, client_secret,
+        self.oauth = self.OAuth(api_endpoint, client_id, client_secret,
                 redirect_uri, grant_type)
         # Set up endpoints
-        self.base_requester = self.Requester(client_id, client_secret,
+        self.base_requester = self.Requester(api_endpoint, client_id, client_secret,
                 access_token, version, site, lang)
 
         # Dynamically enable endpoints
@@ -166,7 +166,9 @@ class Ticketbis(object):
 
     class OAuth(object):
         """Handles OAuth authentication procedures and helps retrieve tokens"""
-        def __init__(self, client_id, client_secret, redirect_uri, grant_type):
+        def __init__(self, api_endpoint, client_id, client_secret, redirect_uri, 
+                grant_type):
+            self.api_endpoint = api_endpoint
             self.client_id = client_id
             self.client_secret = client_secret
             self.redirect_uri = redirect_uri
@@ -179,7 +181,8 @@ class Ticketbis(object):
                 'response_type': u'code',
                 'redirect_uri': self.redirect_uri,
             }
-            return '{AUTH_ENDPOINT}?{params}'.format(
+            return '{API_ENDPOINT}{AUTH_ENDPOINT}?{params}'.format(
+                API_ENDPOINT=self.api_endpoint,
                 AUTH_ENDPOINT=AUTH_ENDPOINT,
                 params=parse.urlencode(params))
 
@@ -203,12 +206,13 @@ class Ticketbis(object):
 
             
             # Get the response from the token uri and attempt to parse
-            res = _post(TOKEN_ENDPOINT, data=params)
+            token_endpoint = '{0}{1}'.format(self.api_endpoint, TOKEN_ENDPOINT)
+            res = _post(token_endpoint, data=params)
             return res['data']['access_token']
 
     class Requester(object):
         """Api requesting object"""
-        def __init__(self, client_id=None, client_secret=None, 
+        def __init__(self, api_endpoint, client_id=None, client_secret=None, 
                 access_token=None, version=None, site=None, lang=None):
             """Sets up the api object"""
             self.client_id = client_id
@@ -221,6 +225,7 @@ class Ticketbis(object):
             self.rate_limit = None
             self.rate_remaining = None
             self.rate_remaining = None
+            self.api_endpoint = api_endpoint
 
             """ pagination """
             self.total_count = None
@@ -241,10 +246,7 @@ class Ticketbis(object):
             # Continue processing normal requests
             headers = self._create_headers()
             params = self._enrich_params(params)
-            url = '{API_ENDPOINT}{path}'.format(
-                API_ENDPOINT=API_ENDPOINT,
-                path=path
-            )
+            url = self._get_url(path)
 
             result = _get(url, headers=headers, params=params)
             self._set_header_properties(result)
@@ -257,10 +259,7 @@ class Ticketbis(object):
 
             headers = self._create_headers()
             params = self._enrich_params(params)
-            url = '{API_ENDPOINT}{path}'.format(
-                API_ENDPOINT=API_ENDPOINT,
-                path=path
-            )
+            url = self._get_url(path)
 
             pending_pages = True
             while pending_pages:
@@ -306,10 +305,7 @@ class Ticketbis(object):
                 files = files.copy()
             headers = self._create_headers()
             data = self._enrich_params(data)
-            url = '{API_ENDPOINT}{path}'.format(
-                API_ENDPOINT=API_ENDPOINT,
-                path=path
-            )
+            url = self._get_url(path)
             result = _post(url, headers=headers, data=json.dumps(data), files=files)
             self.rate_limit = result['headers']['X-RateLimit-Limit']
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
@@ -323,14 +319,17 @@ class Ticketbis(object):
                 files = files.copy()
             headers = self._create_headers()
             data = self._enrich_params(data)
-            url = '{API_ENDPOINT}{path}'.format(
-                API_ENDPOINT=API_ENDPOINT,
-                path=path
-            )
+            url = self._get_url(path)
             result = _put(url, headers=headers, data=json.dumps(data), files=files)
             self.rate_limit = result['headers']['X-RateLimit-Limit']
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
             return result['data']
+
+        def _get_url(self, path):
+            return '{API_ENDPOINT}{path}'.format(
+                API_ENDPOINT=self.api_endpoint,
+                path=path
+            )
 
         def _enrich_params(self, params):
             """Enrich the params dict"""

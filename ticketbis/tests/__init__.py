@@ -7,10 +7,12 @@ import unittest
 
 import ticketbis
 
-if 'CLIENT_ID' in os.environ and 'CLIENT_SECRET' in os.environ and 'ACCESS_TOKEN' in os.environ:
+if 'CLIENT_ID' in os.environ and 'CLIENT_SECRET' in os.environ \
+        and 'ACCESS_TOKEN' in os.environ and 'API_ENDPOINT' in os.environ:
     CLIENT_ID = os.environ['CLIENT_ID']
     CLIENT_SECRET = os.environ['CLIENT_SECRET']
     ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
+    API_ENDPOINT = os.environ['API_ENDPOINT']
 else:
     try:
         from ticketbis.tests._creds import *
@@ -34,7 +36,8 @@ class BaseAuthenticationTestCase(BaseEndpointTestCase):
             client_id=CLIENT_ID,
             client_secret=CLIENT_SECRET,
             redirect_uri='http://ticketbis.com',
-            site=self.default_site_name
+            site=self.default_site_name,
+            api_endpoint=API_ENDPOINT
         )
 
 class BaseAuthenticatedEndpointTestCase(BaseEndpointTestCase):
@@ -43,7 +46,8 @@ class BaseAuthenticatedEndpointTestCase(BaseEndpointTestCase):
 #            client_id=CLIENT_ID,
 #            client_secret=CLIENT_SECRET,
             access_token=ACCESS_TOKEN,
-            site=self.default_site_name
+            site=self.default_site_name,
+            api_endpoint=API_ENDPOINT
         )
 
 class BaseUserlessEndpointTestCase(BaseEndpointTestCase):
@@ -51,7 +55,8 @@ class BaseUserlessEndpointTestCase(BaseEndpointTestCase):
         self.api = ticketbis.Ticketbis(
             client_id=CLIENT_ID,
             client_secret=CLIENT_SECRET,
-            site=self.default_site_name
+            site=self.default_site_name,
+            api_endpoint=API_ENDPOINT
         )
 
 class MultilangEndpointTestCase(BaseEndpointTestCase):
@@ -62,6 +67,7 @@ class MultilangEndpointTestCase(BaseEndpointTestCase):
                 ticketbis.Ticketbis(
                     client_id=CLIENT_ID,
                     client_secret=CLIENT_SECRET,
-                    lang=lang
+                    lang=lang,
+                    api_endpoint=API_ENDPOINT
                 )
             )
