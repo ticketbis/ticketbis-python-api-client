@@ -84,7 +84,7 @@ client = ticketbis.Ticketbis(
     client_secret='YOUR_CLIENT_SECRET')
 ```
 
-#### Authenticated User Access (when you already have a user's access_token)
+#### Authenticated User Access
 
 ```python
 client = ticketbis.Ticketbis(access_token='USER_ACCESS_TOKEN')
