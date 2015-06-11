@@ -7,6 +7,8 @@ NOTE: This document is a *work in progress*.
 Features:
 
 * Python 2+3 compatibility
+* Site auto-discovery
+* Pagination delegated to the API client
 * OAuth2
 * Automatic retries
 
