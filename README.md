@@ -54,51 +54,61 @@ sites = client.sites()
 
 #### Client credentials
 
-    ```python
-    # Construct the client object
-    client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', grant_type=ticketbis.CLIENT_CRED_GRANT_TYPE)
+```python
+# Construct the client object
+client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', grant_type=ticketbis.CLIENT_CRED_GRANT_TYPE)
 
-    # Interrogate ticketbis' servers to get the client's access_token (no code required)
-    access_token = client.oauth.get_token()
+# Interrogate ticketbis' servers to get the client's access_token (no code required)
+access_token = client.oauth.get_token()
 
-    # Apply the returned access token to the client
-    client.set_access_token(access_token)
+# Apply the returned access token to the client
+client.set_access_token(access_token)
 
-    # Get sites
-    sites = client.sites()
-    ```
+# Get sites
+sites = client.sites()
+```
     
 
 ### Instantiating a client
 #### Userless Access
-    ```python
-    client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET')
+```python
+client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET')
 
 #### Authenticated User Access (when you already have a user's access_token)
-    ```python
-    client = ticketbis.Ticketbis(access_token='USER_ACCESS_TOKEN')
-    ```
+```python
+client = ticketbis.Ticketbis(access_token='USER_ACCESS_TOKEN')
+```
 
 
 #### Specifing a specific API version
-    ```python
-    client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', version=2)
-    ```
+```python
+client = ticketbis.Ticketbis(
+    client_id='YOUR_CLIENT_ID', 
+    client_secret='YOUR_CLIENT_SECRET', 
+    version=2)
+```
 or
-    ```python
-    client = ticketbis.Ticketbis(access_token='USER_ACCESS_TOKEN', version=2)
-    ```
+```python
+client = ticketbis.Ticketbis(access_token='USER_ACCESS_TOKEN', version=2)
+```
 
 #### Resolving Site
-    ```python
-    client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', site='ticketbisES')
-    ```
-or
-    ```python
-    client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', lang='en-gb')
-    ```
+Since Ticketbis is a multi-site platform, a `site` or `lang` is required. If you are connecting to a specific site, it is recommended to use the `site` parameter.
+```python
+client = ticketbis.Ticketbis(
+    client_id='YOUR_CLIENT_ID', 
+    client_secret='YOUR_CLIENT_SECRET', 
+    site='ticketbisES')
+```
+Ticketbis can auto-discover the site based on the `lang` parameter (i.e. user's locale).
+```python
+client = ticketbis.Ticketbis(
+    client_id='YOUR_CLIENT_ID', 
+    client_secret='YOUR_CLIENT_SECRET', 
+    lang='en-gb')
+```
 
-    Since Ticketbis is a multi-site platform, a site or lang is required
+A few Ticketbis sites are listed below:
 
 | name              | site                       | lang  |
 | ----------------- | -------------------------- | ----- |
@@ -113,27 +123,30 @@ or
 | ticketbisRU       | www.ticketbis.ru           | ru-ru |
 | ticketbisCL       | www.ticketbis.cl           | es-cl |
 | ticketbisCO       | www.ticketbis.com.co       | es-co |
-| ticketbisPE       | www.ticketbis.com.pe       | es-pe |
-| ticketbisVE       | www.ticketbis.com.ve       | es-ve |
-| ticketbisSV       | www.ticketbislatino.com    | es-es |
-| ticketbisUY       | www.ticketbis.com.uy       | es-uy |
-| ticketbisAU       | www.ticketbis.com/en-au    | en-au |
-| ticketbisHK       | www.ticketbis.com.hk       | zh-hk |
-| ticketbisSG       | www.ticketbis.com.sg       | en-sg |
-| ticketbisZA       | www.ticketbis.co.za        | en-za |
 | ticketbisFR       | www.ticketbisfr.com        | fr-fr |
 | ticketbisJP       | www.ticketbis.com/jp       | ja-jp |
 | ticketbisTW       | www.ticketbis.com/tw       | zh-tw |
 | ticketbisKR       | www.ticketbis.co.kr        | ko-kr |
-| ticketbisNZ       | www.ticketbis.com/nz       | en-nz |
 | ticketbisUS       | www.ticketbis.com/en       | en-us |
 
+A complete list can be found requesting site's API endpont.
 
 ### Examples
 
-#### Venues
-##### [Get details about a venue](https://developer.ticketbis.com/docs/venues/venues)
-    client.venues('40a55d80f964a52020f31ee3')
+#### Sites
+```python
+sites = client.sites()
+```
+
+#### Events for a specific category
+```python
+events = client.categories(2).events()
+```
+
+#### Events for a specific category delegating pagination to the API client
+```python
+events = client.categories(2).events(auto_pagination=True)
+```
 
 ### Testing
 In order to run the tests:
