@@ -31,13 +31,13 @@ Depending upon your system and virtualenv settings, these may require sudo permi
 ### Authentication
 
 #### Authorization code
-    ```python
-    # Construct the client object
-    client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', redirect_uri='http://yoururl.example.com')
+```python
+# Construct the client object
+client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', redirect_uri='http://yoururl.example.com')
 
-    # Build the authorization url for your app
-    auth_uri = client.oauth.auth_url()
-    ```
+# Build the authorization url for your app
+auth_uri = client.oauth.auth_url()
+```
 
 Redirect your user to the address *auth_uri* and let them authorize your app. They will then be redirected to your *redirect_uri*, with a query paramater of code=XX_CODE_RETURNED_IN_REDIRECT_XX. In your webserver, parse out the *code* value, and use it to call client.oauth.get_token()
 
@@ -56,7 +56,10 @@ sites = client.sites()
 
 ```python
 # Construct the client object
-client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', grant_type=ticketbis.CLIENT_CRED_GRANT_TYPE)
+client = ticketbis.Ticketbis(
+    client_id='YOUR_CLIENT_ID', 
+    client_secret='YOUR_CLIENT_SECRET', 
+    grant_type=ticketbis.CLIENT_CRED_GRANT_TYPE)
 
 # Interrogate ticketbis' servers to get the client's access_token (no code required)
 access_token = client.oauth.get_token()
@@ -68,39 +71,45 @@ client.set_access_token(access_token)
 sites = client.sites()
 ```
     
-
 ### Instantiating a client
 #### Userless Access
+
 ```python
 client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET')
+```
 
 #### Authenticated User Access (when you already have a user's access_token)
+
 ```python
 client = ticketbis.Ticketbis(access_token='USER_ACCESS_TOKEN')
 ```
 
-
 #### Specifing a specific API version
+
 ```python
 client = ticketbis.Ticketbis(
     client_id='YOUR_CLIENT_ID', 
     client_secret='YOUR_CLIENT_SECRET', 
     version=2)
 ```
+
 or
+
 ```python
 client = ticketbis.Ticketbis(access_token='USER_ACCESS_TOKEN', version=2)
 ```
 
 #### Resolving Site
-Since Ticketbis is a multi-site platform, a `site` or `lang` is required. If you are connecting to a specific site, it is recommended to use the `site` parameter.
+Since Ticketbis is a multi-site platform, a `site` or `lang` is required. If you are connecting to a specific site, it is recommended to use the `site` parameter:
+
 ```python
 client = ticketbis.Ticketbis(
     client_id='YOUR_CLIENT_ID', 
     client_secret='YOUR_CLIENT_SECRET', 
     site='ticketbisES')
 ```
-Ticketbis can auto-discover the site based on the `lang` parameter (i.e. user's locale).
+Ticketbis can auto-discover the site based on the `lang` parameter (i.e. user's locale):
+
 ```python
 client = ticketbis.Ticketbis(
     client_id='YOUR_CLIENT_ID', 
@@ -134,16 +143,19 @@ A complete list can be found requesting site's API endpont.
 ### Examples
 
 #### Sites
+
 ```python
 sites = client.sites()
 ```
 
 #### Events for a specific category
+
 ```python
 events = client.categories(2).events()
 ```
 
 #### Events for a specific category delegating pagination to the API client
+
 ```python
 events = client.categories(2).events(auto_pagination=True)
 ```
