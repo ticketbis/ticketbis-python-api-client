@@ -79,7 +79,9 @@ sites = client.sites()
 #### Userless Access
 
 ```python
-client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET')
+client = ticketbis.Ticketbis(
+    client_id='YOUR_CLIENT_ID', 
+    client_secret='YOUR_CLIENT_SECRET')
 ```
 
 #### Authenticated User Access (when you already have a user's access_token)
