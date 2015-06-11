@@ -69,6 +69,10 @@ MAX_MULTI_REQUESTS = 5
 # Change this if your Python distribution has issues with Ticketbis's SSL cert
 VERIFY_SSL = True
 
+# Grant types supported
+AUTH_CODE_GRANT_TYPE = 'authorization_code'
+CLIENT_CRED_GRANT_TYPE = 'client_credentials'
+
 
 # Exceptions
 class TicketbisException(Exception): pass
@@ -101,7 +105,7 @@ class Ticketbis(object):
 
     def __init__(self, client_id=None, client_secret=None, access_token=None,
             redirect_uri=None, version=None, site=None, lang='en-gb',
-            grant_type='authorization_code', api_endpoint=API_ENDPOINT):
+            grant_type=AUTH_CODE_GRANT_TYPE, api_endpoint=API_ENDPOINT):
         """Sets up the api object"""
         self.oauth = self.OAuth(api_endpoint, client_id, client_secret,
                 redirect_uri, grant_type)
@@ -194,14 +198,14 @@ class Ticketbis(object):
                 'grant_type': self.grant_type,
             }
 
-            if self.grant_type == 'authorization_code':
+            if self.grant_type == AUTH_CODE_GRANT_TYPE:
                 params['redirect_uri'] = self.redirect_uri
                 if not code:
                     log.error(u'Code not provided')
                     return None
                 else:
                     params['code'] = six.u(code)
-            elif self.grant_type == 'client_credentials':
+            elif self.grant_type == CLIENT_CRED_GRANT_TYPE:
                 params['scope'] = scope
 
             
