@@ -12,10 +12,10 @@ setup(
     version=version,
     author='Jose Gargallo',
     author_email='jose.gargallo@ticketbis.com',
-    url='http://github.com/ticketbis/ticketbis',
-    description='easy-as-pie ticketbis wrapper library',
+    url='https://github.com/ticketbis/ticketbis-python-api-client',
+    description='ticketbis API wrapper library',
     long_description=open('./README.txt', 'r').read(),
-    download_url='http://github.com/ticketbis/ticketbis/tarball/master',
+    download_url='https://github.com/ticketbis/ticketbis-python-api-client',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
