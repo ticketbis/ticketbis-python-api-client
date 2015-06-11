@@ -53,7 +53,7 @@ if NETWORK_DEBUG:
 API_VERSION = 1
 
 # Library versioning matches supported ticketbis API version
-__version__ = '0.1'
+__version__ = '0.2'
 __author__ = u'Jose Gargallo'
 
 API_ENDPOINT = 'https://api.ticketbis.com/'
