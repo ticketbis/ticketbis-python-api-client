@@ -31,9 +31,13 @@ Depending upon your system and virtualenv settings, these may require sudo permi
 ### Authentication
 
 #### Authorization code
+
 ```python
 # Construct the client object
-client = ticketbis.Ticketbis(client_id='YOUR_CLIENT_ID', client_secret='YOUR_CLIENT_SECRET', redirect_uri='http://yoururl.example.com')
+client = ticketbis.Ticketbis(
+    client_id='YOUR_CLIENT_ID', 
+    client_secret='YOUR_CLIENT_SECRET', 
+    redirect_uri='http://yoururl.example.com')
 
 # Build the authorization url for your app
 auth_uri = client.oauth.auth_url()
