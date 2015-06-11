@@ -90,7 +90,7 @@ client = ticketbis.Ticketbis(
 client = ticketbis.Ticketbis(access_token='USER_ACCESS_TOKEN')
 ```
 
-#### Specifing a specific API version
+#### Specific API version
 
 ```python
 client = ticketbis.Ticketbis(
