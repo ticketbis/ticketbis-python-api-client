@@ -159,13 +159,13 @@ sites = client.sites()
 #### Events for a specific category
 
 ```python
-events = client.categories(2).events()
+events = client.categories.events(category_id=2)
 ```
 
 #### Events for a specific category delegating pagination to the API client
 
 ```python
-events = client.categories(2).events(auto_pagination=True)
+events = client.categories.events(2, auto_pagination=True)
 ```
 
 ### Testing
