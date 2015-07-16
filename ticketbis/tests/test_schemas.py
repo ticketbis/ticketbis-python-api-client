@@ -20,3 +20,7 @@ class SchemasEndpointTestCase(BaseAuthenticatedEndpointTestCase):
         assert 'name' in response[0]
         assert self.api.page_max == 2
         assert self.api.page_offset == 0
+
+    def test_schemas_by_venue(self):
+        response = self.api.venues.schemas(self.default_venue_id)
+        assert 'name' in response[0]

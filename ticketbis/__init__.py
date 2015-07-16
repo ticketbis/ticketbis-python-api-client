@@ -404,6 +404,11 @@ class Ticketbis(object):
             return self.GET('{0}'.format(event_id), auto_pagination, 
                    params=params, multi=multi)
 
+        def section_groups(self, event_id, auto_pagination=False,
+                params={}, multi=False):
+            return self.GET('{0}/section_groups'.format(event_id), auto_pagination,
+                   params=params, multi=multi)
+
     class Categories(_Endpoint):
         endpoint = 'categories'
 
@@ -433,12 +438,25 @@ class Ticketbis(object):
             return self.GET('{0}'.format(venue_id), auto_pagination, 
                    params=params, multi=multi)
 
+        def schemas(self, venue_id, auto_pagination=False,
+                params={}, multi=False):
+            return self.GET('{0}/schemas'.format(venue_id), auto_pagination,
+                   params=params, multi=multi)
+
     class Schemas(_Endpoint):
         endpoint = 'schemas'
 
         def __call__(self, schema_id=u'', auto_pagination=False,
                 params={}, multi=False):
             return self.GET('{0}'.format(schema_id), auto_pagination, 
+                   params=params, multi=multi)
+
+    class SectionGroups(_Endpoint):
+        endpoint = 'section_groups'
+
+        def __call__(self, schema_id=u'', auto_pagination=False,
+                params={}, multi=False):
+            return self.GET('{0}'.format(schema_id), auto_pagination,
                    params=params, multi=multi)
 
 
