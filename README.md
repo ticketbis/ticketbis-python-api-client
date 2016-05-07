@@ -37,8 +37,8 @@ Depending upon your system and virtualenv settings, these may require sudo permi
 ```python
 # Construct the client object
 client = ticketbis.Ticketbis(
-    client_id='YOUR_CLIENT_ID', 
-    client_secret='YOUR_CLIENT_SECRET', 
+    client_id='YOUR_CLIENT_ID',
+    client_secret='YOUR_CLIENT_SECRET',
     redirect_uri='http://yoururl.example.com')
 
 # Build the authorization url for your app
@@ -63,8 +63,8 @@ sites = client.sites()
 ```python
 # Construct the client object
 client = ticketbis.Ticketbis(
-    client_id='YOUR_CLIENT_ID', 
-    client_secret='YOUR_CLIENT_SECRET', 
+    client_id='YOUR_CLIENT_ID',
+    client_secret='YOUR_CLIENT_SECRET',
     grant_type=ticketbis.CLIENT_CRED_GRANT_TYPE)
 
 # Interrogate ticketbis' servers to get the client's access_token (no code required)
@@ -76,13 +76,13 @@ client.set_access_token(access_token)
 # Get sites
 sites = client.sites()
 ```
-    
+
 ### Instantiating a client
 #### Userless Access
 
 ```python
 client = ticketbis.Ticketbis(
-    client_id='YOUR_CLIENT_ID', 
+    client_id='YOUR_CLIENT_ID',
     client_secret='YOUR_CLIENT_SECRET')
 ```
 
@@ -96,8 +96,8 @@ client = ticketbis.Ticketbis(access_token='USER_ACCESS_TOKEN')
 
 ```python
 client = ticketbis.Ticketbis(
-    client_id='YOUR_CLIENT_ID', 
-    client_secret='YOUR_CLIENT_SECRET', 
+    client_id='YOUR_CLIENT_ID',
+    client_secret='YOUR_CLIENT_SECRET',
     version=2)
 ```
 
@@ -112,16 +112,16 @@ Since Ticketbis is a multi-site platform, a `site` or `lang` is required. If you
 
 ```python
 client = ticketbis.Ticketbis(
-    client_id='YOUR_CLIENT_ID', 
-    client_secret='YOUR_CLIENT_SECRET', 
+    client_id='YOUR_CLIENT_ID',
+    client_secret='YOUR_CLIENT_SECRET',
     site='ticketbisES')
 ```
 Ticketbis can auto-discover the site based on the `lang` parameter (i.e. user's locale):
 
 ```python
 client = ticketbis.Ticketbis(
-    client_id='YOUR_CLIENT_ID', 
-    client_secret='YOUR_CLIENT_SECRET', 
+    client_id='YOUR_CLIENT_ID',
+    client_secret='YOUR_CLIENT_SECRET',
     lang='en-gb')
 ```
 
@@ -136,7 +136,7 @@ A few Ticketbis sites are listed below:
 | ticketbisAR       | www.ticketbis.com/ar       | es-ar |
 | ticketbisBR       | www.ticketbis.com.br       | pt-br |
 | ticketbisPT       | www.ticketbis.com.pt       | pt-pt |
-| ticketbisDE       | www.ticketbis.com/de-de    | de-de |
+| ticketbisDE       | www.ticketbis.de           | de-de |
 | ticketbisRU       | www.ticketbis.ru           | ru-ru |
 | ticketbisCL       | www.ticketbis.cl           | es-cl |
 | ticketbisCO       | www.ticketbis.com.co       | es-co |
