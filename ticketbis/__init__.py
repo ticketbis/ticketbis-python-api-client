@@ -49,7 +49,7 @@ if NETWORK_DEBUG:
     requests_log.propagate = True
 
 
-# Default API version. 
+# Default API version.
 API_VERSION = 1
 
 # Library versioning matches supported ticketbis API version
@@ -118,14 +118,14 @@ class Ticketbis(object):
 
         # resolves site
         if not site and access_token:
-            # forces API to return site according to lang 
+            # forces API to return site according to lang
             # (gets site from response header)
             self.sites(params={'max': 1})
 
     def _attach_endpoints(self):
         """Dynamically attach endpoint callables to this client"""
         for name, endpoint in inspect.getmembers(self):
-            if inspect.isclass(endpoint) and issubclass(endpoint, 
+            if inspect.isclass(endpoint) and issubclass(endpoint,
                     self._Endpoint) and (endpoint is not self._Endpoint):
                 endpoint_instance = endpoint(self.base_requester)
                 setattr(self, endpoint_instance.endpoint, endpoint_instance)
@@ -163,14 +163,14 @@ class Ticketbis(object):
     @property
     def rate_remaining(self):
         """
-        Returns the remaining rate limit for the last API call 
+        Returns the remaining rate limit for the last API call
         i.e. X-RateLimit-Remaining
         """
         return self.base_requester.rate_remaining
 
     class OAuth(object):
         """Handles OAuth authentication procedures and helps retrieve tokens"""
-        def __init__(self, api_endpoint, client_id, client_secret, redirect_uri, 
+        def __init__(self, api_endpoint, client_id, client_secret, redirect_uri,
                 grant_type):
             self.api_endpoint = api_endpoint
             self.client_id = client_id
@@ -208,7 +208,7 @@ class Ticketbis(object):
             elif self.grant_type == CLIENT_CRED_GRANT_TYPE:
                 params['scope'] = scope
 
-            
+
             # Get the response from the token uri and attempt to parse
             token_endpoint = '{0}{1}'.format(self.api_endpoint, TOKEN_ENDPOINT)
             res = _post(token_endpoint, data=params)
@@ -216,7 +216,7 @@ class Ticketbis(object):
 
     class Requester(object):
         """Api requesting object"""
-        def __init__(self, api_endpoint, client_id=None, client_secret=None, 
+        def __init__(self, api_endpoint, client_id=None, client_secret=None,
                 access_token=None, version=None, site=None, lang=None):
             """Sets up the api object"""
             self.client_id = client_id
@@ -280,7 +280,7 @@ class Ticketbis(object):
 
             self.rate_limit = result['headers']['X-RateLimit-Limit']
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
-            
+
             if 'X-ticketbis-totalCount' in result['headers']:
                 self.total_count = \
                     int(result['headers']['X-ticketbis-totalCount'])
@@ -380,28 +380,28 @@ class Ticketbis(object):
         def GET(self, path=None, auto_pagination=False, *args, **kwargs):
             """Use the requester to get the data"""
             if not auto_pagination:
-                return self.requester.GET(self._expanded_path(path), 
+                return self.requester.GET(self._expanded_path(path),
                         *args, **kwargs)
             else:
-                return self.requester.GET_PAGINATED(self._expanded_path(path), 
+                return self.requester.GET_PAGINATED(self._expanded_path(path),
                     *args, **kwargs)
 
         def POST(self, path=None, *args, **kwargs):
             """Use the requester to post the data"""
-            return self.requester.POST(self._expanded_path(path), 
+            return self.requester.POST(self._expanded_path(path),
                     *args, **kwargs)
 
         def PUT(self, path=None, *args, **kwargs):
             """Use the requester to put the data"""
-            return self.requester.PUT(self._expanded_path(path), 
+            return self.requester.PUT(self._expanded_path(path),
                     *args, **kwargs)
 
     class Events(_Endpoint):
         endpoint = 'events'
 
-        def __call__(self, event_id=u'', auto_pagination=False, 
+        def __call__(self, event_id=u'', auto_pagination=False,
                 params={}, multi=False):
-            return self.GET('{0}'.format(event_id), auto_pagination, 
+            return self.GET('{0}'.format(event_id), auto_pagination,
                    params=params, multi=multi)
 
         def section_groups(self, event_id, auto_pagination=False,
@@ -419,7 +419,7 @@ class Ticketbis(object):
 
         def events(self, category_id, auto_pagination=False,
                 params={}, multi=False):
-            return self.GET('{0}/events'.format(category_id), auto_pagination, 
+            return self.GET('{0}/events'.format(category_id), auto_pagination,
                    params=params, multi=multi)
 
     class Sites(_Endpoint):
@@ -427,7 +427,7 @@ class Ticketbis(object):
 
         def __call__(self, site_id=u'', auto_pagination=False,
                 params={}, multi=False):
-            return self.GET('{0}'.format(site_id), auto_pagination, 
+            return self.GET('{0}'.format(site_id), auto_pagination,
                    params=params, multi=multi)
 
     class Venues(_Endpoint):
@@ -435,7 +435,7 @@ class Ticketbis(object):
 
         def __call__(self, venue_id=u'', auto_pagination=False,
                 params={}, multi=False):
-            return self.GET('{0}'.format(venue_id), auto_pagination, 
+            return self.GET('{0}'.format(venue_id), auto_pagination,
                    params=params, multi=multi)
 
         def schemas(self, venue_id, auto_pagination=False,
@@ -448,7 +448,7 @@ class Ticketbis(object):
 
         def __call__(self, schema_id=u'', auto_pagination=False,
                 params={}, multi=False):
-            return self.GET('{0}'.format(schema_id), auto_pagination, 
+            return self.GET('{0}'.format(schema_id), auto_pagination,
                    params=params, multi=multi)
 
     class SectionGroups(_Endpoint):
@@ -520,7 +520,7 @@ def _get(url, headers={}, params=None):
                         params=param_string, verify=VERIFY_SSL)
                 return _process_response(response)
             except requests.exceptions.RequestException as e:
-                _log_and_raise_exception('Error connecting with ticketbis API', 
+                _log_and_raise_exception('Error connecting with ticketbis API',
                         e)
         except TicketbisException as e:
             # Some errors don't bear repeating
