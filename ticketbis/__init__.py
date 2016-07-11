@@ -53,7 +53,7 @@ if NETWORK_DEBUG:
 API_VERSION = 1
 
 # Library versioning matches supported ticketbis API version
-__version__ = '0.2'
+__version__ = '0.3'
 __author__ = u'Jose Gargallo'
 
 API_ENDPOINT = 'https://api.ticketbis.com/'
@@ -278,8 +278,8 @@ class Ticketbis(object):
         def _set_header_properties(self, result):
             self.site = result['headers']['X-ticketbis-site']
 
-            self.rate_limit = result['headers']['X-RateLimit-Limit']
-            self.rate_remaining = result['headers']['X-RateLimit-Remaining']
+            self.rate_limit = result['headers'].get('X-RateLimit-Limit', None)
+            self.rate_remaining = result['headers'].get('X-RateLimit-Remaining', None)
 
             if 'X-ticketbis-totalCount' in result['headers']:
                 self.total_count = \
