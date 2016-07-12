@@ -53,7 +53,7 @@ if NETWORK_DEBUG:
 API_VERSION = 1
 
 # Library versioning matches supported ticketbis API version
-__version__ = '0.3'
+__version__ = '0.3.1'
 __author__ = u'Jose Gargallo'
 
 API_ENDPOINT = 'https://api.ticketbis.com/'
@@ -105,13 +105,13 @@ class Ticketbis(object):
 
     def __init__(self, client_id=None, client_secret=None, access_token=None,
             redirect_uri=None, version=None, site=None, lang='en-gb',
-            grant_type=AUTH_CODE_GRANT_TYPE, api_endpoint=API_ENDPOINT):
+            grant_type=AUTH_CODE_GRANT_TYPE, api_endpoint=API_ENDPOINT, auth=None):
         """Sets up the api object"""
         self.oauth = self.OAuth(api_endpoint, client_id, client_secret,
                 redirect_uri, grant_type)
         # Set up endpoints
         self.base_requester = self.Requester(api_endpoint, client_id, client_secret,
-                access_token, version, site, lang)
+                access_token, version, site, lang, auth)
 
         # Dynamically enable endpoints
         self._attach_endpoints()
@@ -217,7 +217,7 @@ class Ticketbis(object):
     class Requester(object):
         """Api requesting object"""
         def __init__(self, api_endpoint, client_id=None, client_secret=None,
-                access_token=None, version=None, site=None, lang=None):
+                access_token=None, version=None, site=None, lang=None, auth=None):
             """Sets up the api object"""
             self.client_id = client_id
             self.client_secret = client_secret
@@ -230,6 +230,7 @@ class Ticketbis(object):
             self.rate_remaining = None
             self.rate_remaining = None
             self.api_endpoint = api_endpoint
+            self.auth = auth
 
             """ pagination """
             self.total_count = None
@@ -252,7 +253,7 @@ class Ticketbis(object):
             params = self._enrich_params(params)
             url = self._get_url(path)
 
-            result = _get(url, headers=headers, params=params)
+            result = _get(url, headers=headers, params=params, auth=self.auth)
             self._set_header_properties(result)
 
             return result['data']
@@ -267,7 +268,7 @@ class Ticketbis(object):
 
             pending_pages = True
             while pending_pages:
-                result = _get(url, headers=headers, params=params)
+                result = _get(url, headers=headers, params=params, auth=self.auth)
                 self._set_header_properties(result)
                 pending_pages = \
                     self.page_offset + len(result['data']) < self.total_count
@@ -310,7 +311,7 @@ class Ticketbis(object):
             headers = self._create_headers()
             data = self._enrich_params(data)
             url = self._get_url(path)
-            result = _post(url, headers=headers, data=json.dumps(data), files=files)
+            result = _post(url, headers=headers, data=json.dumps(data), files=files, auth=self.auth)
             self.rate_limit = result['headers']['X-RateLimit-Limit']
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
             return result['data']
@@ -324,7 +325,7 @@ class Ticketbis(object):
             headers = self._create_headers()
             data = self._enrich_params(data)
             url = self._get_url(path)
-            result = _put(url, headers=headers, data=json.dumps(data), files=files)
+            result = _put(url, headers=headers, data=json.dumps(data), files=files, auth=self.auth)
             self.rate_limit = result['headers']['X-RateLimit-Limit']
             self.rate_remaining = result['headers']['X-RateLimit-Remaining']
             return result['data']
@@ -510,14 +511,14 @@ def _log_and_raise_exception(msg, data, cls=TicketbisException):
 """
 Network helper functions
 """
-def _get(url, headers={}, params=None):
+def _get(url, headers={}, params=None, auth=None):
     """Tries to GET data from an endpoint using retries"""
     param_string = _ticketbis_urlencode(params)
     for i in xrange(NUM_REQUEST_RETRIES):
         try:
             try:
                 response = requests.get(url, headers=headers,
-                        params=param_string, verify=VERIFY_SSL)
+                        params=param_string, verify=VERIFY_SSL, auth=auth)
                 return _process_response(response)
             except requests.exceptions.RequestException as e:
                 _log_and_raise_exception('Error connecting with ticketbis API',
@@ -530,20 +531,20 @@ def _get(url, headers={}, params=None):
             if ((i + 1) == NUM_REQUEST_RETRIES): raise
         time.sleep(1)
 
-def _post(url, headers={}, data=None, files=None):
+def _post(url, headers={}, data=None, files=None, auth=None):
     """Tries to POST data to an endpoint"""
     try:
         response = requests.post(url, headers=headers, data=data, files=files,
-                verify=VERIFY_SSL)
+                verify=VERIFY_SSL, auth=auth)
         return _process_response(response)
     except requests.exceptions.RequestException as e:
         _log_and_raise_exception('Error connecting with ticketbis API', e)
 
-def _put(url, headers={}, data=None, files=None):
+def _put(url, headers={}, data=None, files=None, auth=None):
     """Tries to PUT data to an endpoint"""
     try:
         response = requests.put(url, headers=headers, data=data, files=files,
-                verify=VERIFY_SSL)
+                verify=VERIFY_SSL, auth=auth)
         return _process_response(response)
     except requests.exceptions.RequestException as e:
         _log_and_raise_exception('Error connecting with ticketbis API', e)
