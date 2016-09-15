@@ -53,7 +53,7 @@ if NETWORK_DEBUG:
 API_VERSION = 1
 
 # Library versioning matches supported ticketbis API version
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 __author__ = u'Jose Gargallo'
 
 API_ENDPOINT = 'https://api.ticketbis.com/'
@@ -312,8 +312,8 @@ class Ticketbis(object):
             data = self._enrich_params(data)
             url = self._get_url(path)
             result = _post(url, headers=headers, data=json.dumps(data), files=files, auth=self.auth)
-            self.rate_limit = result['headers']['X-RateLimit-Limit']
-            self.rate_remaining = result['headers']['X-RateLimit-Remaining']
+            self.rate_limit = result['headers'].get('X-RateLimit-Limit', None)
+            self.rate_remaining = result['headers'].get('X-RateLimit-Remaining', None)
             return result['data']
 
         def PUT(self, path, data={}, files=None):
@@ -326,8 +326,8 @@ class Ticketbis(object):
             data = self._enrich_params(data)
             url = self._get_url(path)
             result = _put(url, headers=headers, data=json.dumps(data), files=files, auth=self.auth)
-            self.rate_limit = result['headers']['X-RateLimit-Limit']
-            self.rate_remaining = result['headers']['X-RateLimit-Remaining']
+            self.rate_limit = result['headers'].get('X-RateLimit-Limit', None)
+            self.rate_remaining = result['headers'].get('X-RateLimit-Remaining', None)
             return result['data']
 
         def _get_url(self, path):
