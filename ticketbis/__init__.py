@@ -17,6 +17,7 @@ import inspect
 import math
 import time
 import sys
+from copy import copy
 
 # 3rd party libraries that might not be present during initial install
 try:
@@ -365,6 +366,10 @@ class Ticketbis(object):
         def __init__(self, requester):
             """Stores the request function for retrieving data"""
             self.requester = requester
+
+        def copy(self):
+            """Generates a new copy of endpoint"""
+            return self.__class__(copy(self.requester))
 
         def _expanded_path(self, path=None):
             """Gets the expanded path, given this endpoint"""
