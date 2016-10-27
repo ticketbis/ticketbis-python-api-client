@@ -238,6 +238,12 @@ class Ticketbis(object):
             self.page_offset = None
             self.page_max = None
 
+            api_v = 'application/vnd.ticketbis.v{0}+json'.format(self.version)
+            self.base_headers = {
+                'Accept': '{0}, application/json'.format(api_v),
+                'Content-Type': 'application/json',
+            }
+
         def set_token(self, access_token):
             """Set the OAuth token for this requester"""
             self.oauth_token = access_token
@@ -346,11 +352,7 @@ class Ticketbis(object):
 
         def _create_headers(self):
             """Get the headers we need"""
-            api_v = 'application/vnd.ticketbis.v{0}+json'.format(self.version)
-            headers = {
-                'Accept': '{0}, application/json'.format(api_v),
-                'Content-Type': 'application/json',
-            }
+            headers = self.base_headers.copy()
 
             if not self.userless:
                 headers['Authorization'] = 'Bearer {0}'.format(self.oauth_token)
