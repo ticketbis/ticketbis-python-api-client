@@ -54,7 +54,7 @@ if NETWORK_DEBUG:
 API_VERSION = 1
 
 # Library versioning matches supported ticketbis API version
-__version__ = '0.3.3'
+__version__ = '0.3.4-SNAPSHOT'
 __author__ = u'Jose Gargallo'
 
 API_ENDPOINT = 'https://api.ticketbis.com/'
@@ -76,7 +76,7 @@ CLIENT_CRED_GRANT_TYPE = 'client_credentials'
 
 
 # Exceptions
-class TicketbisException(Exception): pass
+class TicketbisException(RuntimeError): pass
 class InvalidAuth(TicketbisException): pass
 class ParamError(TicketbisException): pass
 class EndpointError(TicketbisException): pass
@@ -85,6 +85,7 @@ class RateLimitExceeded(TicketbisException): pass
 class Deprecated(TicketbisException): pass
 class ServerError(TicketbisException): pass
 class FailedGeocode(TicketbisException): pass
+class PreconditionFailed(TicketbisException): pass
 class Other(TicketbisException): pass
 
 error_types = {
@@ -560,14 +561,22 @@ def _process_response(response):
     """Make the request and handle exception processing"""
     # Read the response as JSON
     try:
+        if response.status_code in (200, 201):
+            data = response.json()
+            return { 'headers': response.headers, 'data': data }
+
+        if response.status_code == 412:
+            # Especial case
+            _log_and_raise_exception('Precondition failed', response.text,
+                    cls=PreconditionFailed)
+
+        # Default case, Got proper response
         data = response.json()
+        return _raise_error_from_response(data)
+
     except ValueError:
         _log_and_raise_exception('Invalid response', response.text)
 
-    # Default case, Got proper response
-    if response.status_code in (200, 201):
-        return { 'headers': response.headers, 'data': data }
-    return _raise_error_from_response(data)
 
 def _raise_error_from_response(data):
     """Processes the response data"""
