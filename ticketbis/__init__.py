@@ -54,7 +54,7 @@ if NETWORK_DEBUG:
 API_VERSION = 1
 
 # Library versioning matches supported ticketbis API version
-__version__ = '0.3.4'
+__version__ = '0.3.5'
 __author__ = u'Jose Gargallo'
 
 API_ENDPOINT = 'https://api.ticketbis.com/'
@@ -437,6 +437,15 @@ class Ticketbis(object):
         def __call__(self, site_id=u'', auto_pagination=False,
                 params={}, multi=False):
             return self.GET('{0}'.format(site_id), auto_pagination,
+                   params=params, multi=multi)
+
+
+    class Cities(_Endpoint):
+        endpoint = 'cities'
+
+        def __call__(self, city_id=u'', auto_pagination=False,
+                params={}, multi=False):
+            return self.GET('{0}'.format(city_id), auto_pagination,
                    params=params, multi=multi)
 
     class Venues(_Endpoint):
