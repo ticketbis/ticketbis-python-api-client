@@ -1,27 +1,39 @@
-#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
-# (c) 2015 Ticketbis
-import logging; log = logging.getLogger(__name__)
+# -*- coding: utf-8 -*-
+#
+# Copyright (c) 2015-2019 Ticketbis
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
-import os
 
-from . import TEST_DATA_DIR, BaseAuthenticatedEndpointTestCase
+from . import BaseAuthenticatedEndpointTestCase
+
 
 class VenuesEndpointTestCase(BaseAuthenticatedEndpointTestCase):
-    """
-    General
-    """
+    """Test endpoint for managing venues."""
+
     def test_venue(self):
+        """Return a single venue."""
         response = self.api.venues(self.default_venue_id)
-        assert 'name' in response
+        assert "name" in response
 
     def test_venues(self):
-        response = self.api.venues(params={'max': 2, 'offset': 0})
-        assert 'name' in response[0]
+        """Return multiple venues using pagination."""
+        response = self.api.venues(params={"max": 2, "offset": 0})
+        assert "name" in response[0]
         assert self.api.page_max == 2
         assert self.api.page_offset == 0
-    
-    #def test_venues_update(self):
+
+    # def test_venues_update(self):
     #    response = self.api.venues.update({
     #        'id': '1',
     #        'name': 'San mames API TEST 222222',
