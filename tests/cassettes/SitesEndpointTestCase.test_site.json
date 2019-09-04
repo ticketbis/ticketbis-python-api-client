@@ -1,0 +1,91 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2019-09-04T11:44:32",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.ticketbis.v1+json, application/json"
+          ],
+          "Authorization": [
+            "Basic <AUTH_TOKEN>"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "python-requests/2.22.0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "method": "GET",
+        "uri": "https://buscaticket.com.qa2.sh-env.net/api/sites/1"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "{\"id\":1,\"locale\":\"es_ES\",\"brandName\":\"StubHub\",\"companyName\":\"eBay\",\"mixpanelActive\":false,\"layout\":\"stubhub\",\"logoName\":\"stubhub\",\"name\":\"ticketbisES\",\"url\":\"http://intl.stubhub.es.qa2.sh-env.net\",\"secure_url\":\"https://secure.stubhub.es.qa2.sh-env.net\",\"country\":{\"id\":10,\"name\":\"Espa\u00f1a\",\"a2\":\"ES\",\"timezone\":\"Europe/Madrid\",\"currency\":\"EUR\"},\"emailSender\":\"no-reply@stubhub.es\",\"brokerCustomerServiceEmail\":\"topsellers@stubhub.es\",\"customerServiceEmail\":\"contacto@stubhub.es\",\"hidden\":true}"
+        },
+        "headers": {
+          "Access-Control-Allow-Origin": [
+            "*"
+          ],
+          "Cache-Control": [
+            "max-age=0"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Length": [
+            "493"
+          ],
+          "Content-Type": [
+            "application/json;charset=utf-8"
+          ],
+          "Date": [
+            "Wed, 04 Sep 2019 11:44:32 GMT"
+          ],
+          "Expires": [
+            "Wed, 04 Sep 2019 11:44:32 GMT"
+          ],
+          "Server": [
+            "nginx"
+          ],
+          "X-Request-ID": [
+            "94b8a47d-8230-42ed-b87b-3d86c868ca59"
+          ],
+          "X-Robots-Tag": [
+            "noindex"
+          ],
+          "X-Stubhub-International-dye": [
+            "9834d639-dd71-42d8-ac3d-18b5e922e2e7"
+          ],
+          "X-ticketbis-Media-Type": [
+            "application/json"
+          ],
+          "X-ticketbis-message": [
+            "Details for the site resource"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://buscaticket.com.qa2.sh-env.net/api/sites/1"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.8.1"
+}

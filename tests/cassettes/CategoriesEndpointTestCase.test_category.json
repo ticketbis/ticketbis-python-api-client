@@ -1,0 +1,91 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2019-09-04T11:44:03",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.ticketbis.v1+json, application/json"
+          ],
+          "Authorization": [
+            "Basic <AUTH_TOKEN>"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "python-requests/2.22.0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "method": "GET",
+        "uri": "https://buscaticket.com.qa2.sh-env.net/api/categories/2"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "{\"id\":2,\"name\":\"M\u00fasica\",\"depth\":1,\"url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-musica/ca2\",\"events_count\":39394,\"entity_type\":\"CATEGORY\",\"title\":\"Entradas M\u00fasica | StubHub Espa\u00f1a\",\"leaf\":false,\"image\":\"http://s3-eu-west-1.amazonaws.com/tb-qa2-statics/categoria/2.jpg\",\"ticketbis_only\":false,\"description\":\"<p>Pocos placeres pueden compararse al de escuchar la mejor m&uacute;sica en directo. Si eres de los que est&aacute;s deseando que tu artista favorito saque gira para ir a disfrutar de sus &uacute;ltimos temas, est&aacute;s en el sitio adecuado. Las entradas para los mejores eventos musicales del a&ntilde;o est&aacute;n a tu disposici&oacute;n, con todos los conciertos y festivales nacionales e internacionales que puedas imaginar. Piensa en&nbsp;tu artista favorito sobre el escenario. Tal vez no has podido verlo porque sus entradas se han agotado, pero eso no es problema ya que en el portal de compra y venta de entradas StubHub a&uacute;n tienes la posibilidad de reservar un sitio privilegiado para verlo en el sitio que elijas. Todas las entradas de m&uacute;sica est&aacute;n a solo un clic de distancia.&nbsp;No lo pienses m&aacute;s: busca tu evento y encuentra entradas para los mejores conciertos y festivales aqu&iacute;, en StubHub.&nbsp;<\\u002fp>\",\"description_unique\":true,\"meta_description\":\"Compra y venta de entradas para los mejores conciertos y festivales nacionales e internacionales con total garant\u00eda. No te lo pierdas con StubHub.\"}"
+        },
+        "headers": {
+          "Access-Control-Allow-Origin": [
+            "*"
+          ],
+          "Cache-Control": [
+            "max-age=0"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Length": [
+            "1480"
+          ],
+          "Content-Type": [
+            "application/json;charset=utf-8"
+          ],
+          "Date": [
+            "Wed, 04 Sep 2019 11:44:03 GMT"
+          ],
+          "Expires": [
+            "Wed, 04 Sep 2019 11:44:03 GMT"
+          ],
+          "Server": [
+            "nginx"
+          ],
+          "X-Request-ID": [
+            "39c0cd50-3b91-4bf8-b2e0-cb9d724245f2"
+          ],
+          "X-Robots-Tag": [
+            "noindex"
+          ],
+          "X-Stubhub-International-dye": [
+            "c0d31dfa-11a6-40bc-9afc-67ae10d0f81b"
+          ],
+          "X-ticketbis-Media-Type": [
+            "application/json"
+          ],
+          "X-ticketbis-message": [
+            "Details for the Category resource"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://buscaticket.com.qa2.sh-env.net/api/categories/2"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.8.1"
+}

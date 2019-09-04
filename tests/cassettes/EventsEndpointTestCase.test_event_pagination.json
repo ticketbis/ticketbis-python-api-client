@@ -1,0 +1,195 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2019-09-04T11:44:06",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.ticketbis.v1+json, application/json"
+          ],
+          "Authorization": [
+            "Basic <AUTH_TOKEN>"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "python-requests/2.22.0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "method": "GET",
+        "uri": "https://buscaticket.com.qa2.sh-env.net/api/events?max=1"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "[{\"id\":877217,\"name\":\"Harry Potter and the Cursed Child London (Part 1 & 2)\",\"title\":\"Entradas Harry Potter and the Cursed Child London (Part 1 & 2) | 04/09/2019 | StubHub Espa\u00f1a\",\"url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-harry-potter-and-the-cursed-child-london-part-1-and-2/ev877217\",\"affiliate_url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-harry-potter-and-the-cursed-child-london-part-1-and-2/ev877217/fix\",\"market_type\":\"SECONDARY\",\"date\":\"2019-09-04T12:55:00Z\",\"localized_date\":\"04/09/2019-13:55\",\"updated_time\":\"2019-07-13T04:18:45Z\",\"timezone\":\"Europe/London\",\"image\":\"http://s3-eu-west-1.amazonaws.com/tb-qa2-statics/categoria/11246.jpg\",\"min_price\":{\"amount\":334.83,\"currency\":\"EUR\"},\"min_listing_price\":{\"amount\":334.83,\"currency\":\"EUR\"},\"external_platform\":null,\"details\":null,\"on_sale_date\":\"2018-12-06T16:00:00Z\",\"lastminute\":false,\"shipment_deadline\":\"2019-09-04T12:55:00Z\",\"pum_deadline\":\"2019-09-04T12:55:00Z\",\"lmsInstructions\":null,\"ticketbis_only\":false}]"
+        },
+        "headers": {
+          "Access-Control-Allow-Origin": [
+            "*"
+          ],
+          "Cache-Control": [
+            "max-age=0"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Length": [
+            "996"
+          ],
+          "Content-Type": [
+            "application/json;charset=utf-8"
+          ],
+          "Date": [
+            "Wed, 04 Sep 2019 11:44:06 GMT"
+          ],
+          "Expires": [
+            "Wed, 04 Sep 2019 11:44:06 GMT"
+          ],
+          "Server": [
+            "nginx"
+          ],
+          "X-Request-ID": [
+            "d620b79c-1843-4dfe-bc15-ccb0e49e757b"
+          ],
+          "X-Robots-Tag": [
+            "noindex"
+          ],
+          "X-Stubhub-International-dye": [
+            "a2e0204f-3b8a-4de6-a013-be669ecf1667"
+          ],
+          "X-ticketbis-Media-Type": [
+            "application/json"
+          ],
+          "X-ticketbis-message": [
+            "List of Event resources"
+          ],
+          "X-ticketbis-pageMaxSize": [
+            "1"
+          ],
+          "X-ticketbis-pageOffset": [
+            "0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ],
+          "X-ticketbis-totalCount": [
+            "127210"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://buscaticket.com.qa2.sh-env.net/api/events?max=1"
+      }
+    },
+    {
+      "recorded_at": "2019-09-04T11:44:10",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.ticketbis.v1+json, application/json"
+          ],
+          "Authorization": [
+            "Basic <AUTH_TOKEN>"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "python-requests/2.22.0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "method": "GET",
+        "uri": "https://buscaticket.com.qa2.sh-env.net/api/events?max=1&offset=1"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "[{\"id\":877120,\"name\":\"Harry Potter and the Cursed Child London (Part 1)\",\"title\":\"Entradas Harry Potter and the Cursed Child London (Part 1) | 04/09/2019 | StubHub Espa\u00f1a\",\"url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-harry-potter-and-the-cursed-child-london-part-1/ev877120\",\"affiliate_url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-harry-potter-and-the-cursed-child-london-part-1/ev877120/fix\",\"market_type\":\"SECONDARY\",\"date\":\"2019-09-04T13:00:00Z\",\"localized_date\":\"04/09/2019-14:00\",\"updated_time\":\"2019-07-13T04:17:06Z\",\"timezone\":\"Europe/London\",\"image\":\"http://s3-eu-west-1.amazonaws.com/tb-qa2-statics/categoria/11246.jpg\",\"min_price\":null,\"min_listing_price\":null,\"external_platform\":null,\"details\":null,\"on_sale_date\":\"2018-12-06T15:30:00Z\",\"lastminute\":false,\"shipment_deadline\":\"2019-09-04T13:00:00Z\",\"pum_deadline\":\"2019-09-04T13:00:00Z\",\"lmsInstructions\":null,\"ticketbis_only\":false}]"
+        },
+        "headers": {
+          "Access-Control-Allow-Origin": [
+            "*"
+          ],
+          "Cache-Control": [
+            "max-age=0"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Length": [
+            "916"
+          ],
+          "Content-Type": [
+            "application/json;charset=utf-8"
+          ],
+          "Date": [
+            "Wed, 04 Sep 2019 11:44:10 GMT"
+          ],
+          "Expires": [
+            "Wed, 04 Sep 2019 11:44:10 GMT"
+          ],
+          "Server": [
+            "nginx"
+          ],
+          "X-Request-ID": [
+            "87d1cdac-0a05-4237-9805-26ab1fb72ac2"
+          ],
+          "X-Robots-Tag": [
+            "noindex"
+          ],
+          "X-Stubhub-International-dye": [
+            "230feaf5-f21d-4982-b77a-6a49039cdd9c"
+          ],
+          "X-ticketbis-Media-Type": [
+            "application/json"
+          ],
+          "X-ticketbis-message": [
+            "List of Event resources"
+          ],
+          "X-ticketbis-pageMaxSize": [
+            "1"
+          ],
+          "X-ticketbis-pageOffset": [
+            "1"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ],
+          "X-ticketbis-totalCount": [
+            "127210"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://buscaticket.com.qa2.sh-env.net/api/events?max=1&offset=1"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.8.1"
+}

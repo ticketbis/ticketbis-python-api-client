@@ -1,0 +1,195 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2019-09-04T11:44:32",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.ticketbis.v1+json, application/json"
+          ],
+          "Authorization": [
+            "Basic <AUTH_TOKEN>"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "python-requests/2.22.0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "method": "GET",
+        "uri": "https://buscaticket.com.qa2.sh-env.net/api/events?max=1&offset=0"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "[{\"id\":877217,\"name\":\"Harry Potter and the Cursed Child London (Part 1 & 2)\",\"title\":\"Entradas Harry Potter and the Cursed Child London (Part 1 & 2) | 04/09/2019 | StubHub Espa\u00f1a\",\"url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-harry-potter-and-the-cursed-child-london-part-1-and-2/ev877217\",\"affiliate_url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-harry-potter-and-the-cursed-child-london-part-1-and-2/ev877217/fix\",\"market_type\":\"SECONDARY\",\"date\":\"2019-09-04T12:55:00Z\",\"localized_date\":\"04/09/2019-13:55\",\"updated_time\":\"2019-07-13T04:18:45Z\",\"timezone\":\"Europe/London\",\"image\":\"http://s3-eu-west-1.amazonaws.com/tb-qa2-statics/categoria/11246.jpg\",\"min_price\":{\"amount\":334.83,\"currency\":\"EUR\"},\"min_listing_price\":{\"amount\":334.83,\"currency\":\"EUR\"},\"external_platform\":null,\"details\":null,\"on_sale_date\":\"2018-12-06T16:00:00Z\",\"lastminute\":false,\"shipment_deadline\":\"2019-09-04T12:55:00Z\",\"pum_deadline\":\"2019-09-04T12:55:00Z\",\"lmsInstructions\":null,\"ticketbis_only\":false}]"
+        },
+        "headers": {
+          "Access-Control-Allow-Origin": [
+            "*"
+          ],
+          "Cache-Control": [
+            "max-age=0"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Length": [
+            "996"
+          ],
+          "Content-Type": [
+            "application/json;charset=utf-8"
+          ],
+          "Date": [
+            "Wed, 04 Sep 2019 11:44:32 GMT"
+          ],
+          "Expires": [
+            "Wed, 04 Sep 2019 11:44:32 GMT"
+          ],
+          "Server": [
+            "nginx"
+          ],
+          "X-Request-ID": [
+            "5d35f7b0-1a6a-41ea-acf7-38988d825cf2"
+          ],
+          "X-Robots-Tag": [
+            "noindex"
+          ],
+          "X-Stubhub-International-dye": [
+            "97d9c9c6-c855-483e-84e7-ac6ee5e6eed4"
+          ],
+          "X-ticketbis-Media-Type": [
+            "application/json"
+          ],
+          "X-ticketbis-message": [
+            "List of Event resources"
+          ],
+          "X-ticketbis-pageMaxSize": [
+            "1"
+          ],
+          "X-ticketbis-pageOffset": [
+            "0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ],
+          "X-ticketbis-totalCount": [
+            "127210"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://buscaticket.com.qa2.sh-env.net/api/events?max=1&offset=0"
+      }
+    },
+    {
+      "recorded_at": "2019-09-04T11:44:32",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.ticketbis.v1+json, application/json"
+          ],
+          "Authorization": [
+            "Basic <AUTH_TOKEN>"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "python-requests/2.22.0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "method": "GET",
+        "uri": "https://buscaticket.com.qa2.sh-env.net/api/events/877217/section_groups"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "[{\"id\":3440006,\"name\":\"Grand Circle\",\"price_section\":null,\"color\":5},{\"id\":3440007,\"name\":\"Orchestra Stalls\",\"price_section\":null,\"color\":6},{\"id\":3440008,\"name\":\"Box\",\"price_section\":null,\"color\":2},{\"id\":3440009,\"name\":\"Boxes\",\"price_section\":null,\"color\":3},{\"id\":3440010,\"name\":\"Dress Circle\",\"price_section\":null,\"color\":4},{\"id\":3440011,\"name\":\"Balcony\",\"price_section\":null,\"color\":1}]"
+        },
+        "headers": {
+          "Access-Control-Allow-Origin": [
+            "*"
+          ],
+          "Cache-Control": [
+            "max-age=0"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Length": [
+            "392"
+          ],
+          "Content-Type": [
+            "application/json;charset=utf-8"
+          ],
+          "Date": [
+            "Wed, 04 Sep 2019 11:44:32 GMT"
+          ],
+          "Expires": [
+            "Wed, 04 Sep 2019 11:44:32 GMT"
+          ],
+          "Server": [
+            "nginx"
+          ],
+          "X-Request-ID": [
+            "9e5538ed-2b4c-4be6-a4f1-6f68e7238330"
+          ],
+          "X-Robots-Tag": [
+            "noindex"
+          ],
+          "X-Stubhub-International-dye": [
+            "e50436d5-6d69-41d4-b571-b37db8447be1"
+          ],
+          "X-ticketbis-Media-Type": [
+            "application/json"
+          ],
+          "X-ticketbis-message": [
+            "List of section_group resources"
+          ],
+          "X-ticketbis-pageMaxSize": [
+            "6"
+          ],
+          "X-ticketbis-pageOffset": [
+            "0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ],
+          "X-ticketbis-totalCount": [
+            "6"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://buscaticket.com.qa2.sh-env.net/api/events/877217/section_groups"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.8.1"
+}

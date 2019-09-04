@@ -1,0 +1,100 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2019-09-04T11:44:32",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.ticketbis.v1+json, application/json"
+          ],
+          "Authorization": [
+            "Basic <AUTH_TOKEN>"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "python-requests/2.22.0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "method": "GET",
+        "uri": "https://buscaticket.com.qa2.sh-env.net/api/sites?max=2&offset=0"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "[{\"id\":1,\"locale\":\"es_ES\",\"brandName\":\"StubHub\",\"companyName\":\"eBay\",\"mixpanelActive\":false,\"layout\":\"stubhub\",\"logoName\":\"stubhub\",\"name\":\"ticketbisES\",\"url\":\"http://intl.stubhub.es.qa2.sh-env.net\",\"secure_url\":\"https://secure.stubhub.es.qa2.sh-env.net\",\"country\":{\"id\":10,\"name\":\"Espa\u00f1a\",\"a2\":\"ES\",\"timezone\":\"Europe/Madrid\",\"currency\":\"EUR\"},\"emailSender\":\"no-reply@stubhub.es\",\"brokerCustomerServiceEmail\":\"topsellers@stubhub.es\",\"customerServiceEmail\":\"contacto@stubhub.es\",\"hidden\":true},{\"id\":2,\"locale\":\"it_IT\",\"brandName\":\"StubHub\",\"companyName\":\"eBay\",\"mixpanelActive\":false,\"layout\":\"stubhub\",\"logoName\":\"stubhub\",\"name\":\"ticketbisIT\",\"url\":\"http://intl.stubhub.it.qa2.sh-env.net\",\"secure_url\":\"https://secure.stubhub.it.qa2.sh-env.net\",\"country\":{\"id\":12,\"name\":\"Italia\",\"a2\":\"IT\",\"timezone\":\"Europe/Rome\",\"currency\":\"EUR\"},\"emailSender\":\"no-reply@stubhub.it\",\"brokerCustomerServiceEmail\":\"topsellers@stubhub.it\",\"customerServiceEmail\":\"contatto@stubhub.it\",\"hidden\":true}]"
+        },
+        "headers": {
+          "Access-Control-Allow-Origin": [
+            "*"
+          ],
+          "Cache-Control": [
+            "max-age=0"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Length": [
+            "986"
+          ],
+          "Content-Type": [
+            "application/json;charset=utf-8"
+          ],
+          "Date": [
+            "Wed, 04 Sep 2019 11:44:32 GMT"
+          ],
+          "Expires": [
+            "Wed, 04 Sep 2019 11:44:32 GMT"
+          ],
+          "Server": [
+            "nginx"
+          ],
+          "X-Request-ID": [
+            "ffbea67f-772f-4c68-8e2c-1460acf8cc29"
+          ],
+          "X-Robots-Tag": [
+            "noindex"
+          ],
+          "X-Stubhub-International-dye": [
+            "2af1d7c8-3ffc-4b68-90dd-6848ab75714e"
+          ],
+          "X-ticketbis-Media-Type": [
+            "application/json"
+          ],
+          "X-ticketbis-message": [
+            "List of site resources"
+          ],
+          "X-ticketbis-pageMaxSize": [
+            "2"
+          ],
+          "X-ticketbis-pageOffset": [
+            "0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ],
+          "X-ticketbis-totalCount": [
+            "4"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://buscaticket.com.qa2.sh-env.net/api/sites?max=2&offset=0"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.8.1"
+}

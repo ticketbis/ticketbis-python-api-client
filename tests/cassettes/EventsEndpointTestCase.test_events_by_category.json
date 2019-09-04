@@ -1,0 +1,100 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2019-09-04T11:44:27",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.ticketbis.v1+json, application/json"
+          ],
+          "Authorization": [
+            "Basic <AUTH_TOKEN>"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "python-requests/2.22.0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "method": "GET",
+        "uri": "https://buscaticket.com.qa2.sh-env.net/api/categories/2/events?max=2&offset=0"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "[{\"id\":1029751,\"name\":\"Evanescence Plze\u0148\",\"title\":\"Entradas Evanescence Plze\u0148 | 04/09/2019 | StubHub Espa\u00f1a\",\"url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-evanescence-plzen/ev1029751\",\"affiliate_url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-evanescence-plzen/ev1029751/fix\",\"market_type\":\"SECONDARY\",\"date\":\"2019-09-04T16:00:00Z\",\"localized_date\":\"04/09/2019-18:00\",\"updated_time\":\"2019-07-13T18:17:57Z\",\"timezone\":\"Europe/Berlin\",\"image\":\"http://s3-eu-west-1.amazonaws.com/tb-qa2-statics/categoria/2454.jpg\",\"min_price\":{\"amount\":250.00,\"currency\":\"EUR\"},\"min_listing_price\":{\"amount\":250.00,\"currency\":\"EUR\"},\"external_platform\":null,\"details\":null,\"on_sale_date\":\"2019-05-06T13:30:00Z\",\"lastminute\":false,\"shipment_deadline\":\"2019-09-04T16:00:00Z\",\"pum_deadline\":\"2019-09-04T16:00:00Z\",\"lmsInstructions\":null,\"ticketbis_only\":false},{\"id\":906198,\"name\":\"ProgPower USA 2 Day Pass  (September 4-5)\",\"title\":\"Entradas ProgPower USA 2 Day Pass  (September 4-5) | 04/09/2019 | StubHub Espa\u00f1a\",\"url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-progpower-usa-2-day-pass-september-4-5/ev906198\",\"affiliate_url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-progpower-usa-2-day-pass-september-4-5/ev906198/fix\",\"market_type\":\"SECONDARY\",\"date\":\"2019-09-04T16:59:00Z\",\"localized_date\":\"04/09/2019-12:59\",\"updated_time\":\"2019-06-12T01:18:32Z\",\"timezone\":\"America/New_York\",\"image\":\"http://s3-eu-west-1.amazonaws.com/tb-qa2-statics/categoria/79.jpg\",\"min_price\":{\"amount\":79.17,\"currency\":\"EUR\"},\"min_listing_price\":{\"amount\":79.17,\"currency\":\"EUR\"},\"external_platform\":null,\"details\":null,\"on_sale_date\":\"2019-01-04T11:00:00Z\",\"lastminute\":false,\"shipment_deadline\":\"2019-09-04T16:59:00Z\",\"pum_deadline\":\"2019-09-04T16:59:00Z\",\"lmsInstructions\":null,\"ticketbis_only\":false}]"
+        },
+        "headers": {
+          "Access-Control-Allow-Origin": [
+            "*"
+          ],
+          "Cache-Control": [
+            "max-age=0"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Length": [
+            "1795"
+          ],
+          "Content-Type": [
+            "application/json;charset=utf-8"
+          ],
+          "Date": [
+            "Wed, 04 Sep 2019 11:44:27 GMT"
+          ],
+          "Expires": [
+            "Wed, 04 Sep 2019 11:44:27 GMT"
+          ],
+          "Server": [
+            "nginx"
+          ],
+          "X-Request-ID": [
+            "16072311-bb90-4764-aeb2-e3d5b55352d4"
+          ],
+          "X-Robots-Tag": [
+            "noindex"
+          ],
+          "X-Stubhub-International-dye": [
+            "3018e0bd-f579-4aed-8a89-358a460dff7a"
+          ],
+          "X-ticketbis-Media-Type": [
+            "application/json"
+          ],
+          "X-ticketbis-message": [
+            "List of Event resources"
+          ],
+          "X-ticketbis-pageMaxSize": [
+            "2"
+          ],
+          "X-ticketbis-pageOffset": [
+            "0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ],
+          "X-ticketbis-totalCount": [
+            "37880"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://buscaticket.com.qa2.sh-env.net/api/categories/2/events?max=2&offset=0"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.8.1"
+}

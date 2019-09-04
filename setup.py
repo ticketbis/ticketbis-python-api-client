@@ -25,6 +25,10 @@ with open(os.path.join("ticketbis", "version.py"), "rt") as fp:
     exec(fp.read(), g)
     version = g["__version__"]
 
+tests_require = ["pytest", "pytest-cov", "betamax", "betamax-serializers"]
+extras_require = {"all": tests_require}
+setup_requires = ["pytest-runner>=2.6.2"]
+
 setup(
     name="ticketbis",
     version=version,
@@ -44,8 +48,11 @@ setup(
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "License :: OSI Approved :: Apache Software License",
     ],
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests"]),
     install_requires=["requests>=2.1", "six"],
+    tests_require=tests_require,
+    extras_require=extras_require,
+    setup_requires=setup_requires,
     license="MIT License",
     keywords="ticketbis api",
     include_package_data=True,

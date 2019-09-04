@@ -1,0 +1,91 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2019-09-04T11:44:28",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.ticketbis.v1+json, application/json"
+          ],
+          "Authorization": [
+            "Basic <AUTH_TOKEN>"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "python-requests/2.22.0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "method": "GET",
+        "uri": "https://buscaticket.com.qa2.sh-env.net/api/schemas/1"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "{\"id\":1,\"name\":\"Estadio de San Mam\u00e9s-esquema f\u00fatbol- LIGA BUENO\",\"static_image\":null,\"dynamic_image\":\"https://d3l13i8idnuwnd.cloudfront.net/map/1573.svg\",\"venue_schema_id\":1573,\"general_admission\":false,\"venue\":{\"id\":1,\"name\":\"Estadio de San Mam\u00e9s\",\"city\":{\"id\":1,\"latitude\":43.2630051,\"longitude\":-2.9349915,\"name\":\"Bilbao\",\"country\":\"Espa\u00f1a\",\"countryCode\":\"ES\",\"slug\":\"entradas-bilbao\",\"url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-bilbao/ct1\"},\"address\":\"15 Calle de Bri\u00f1as, Bilbao, PV 48013\",\"country\":\"Espa\u00f1a\",\"country_code\":\"ES\",\"latitude\":43.2623200,\"longitude\":-2.9480000}}"
+        },
+        "headers": {
+          "Access-Control-Allow-Origin": [
+            "*"
+          ],
+          "Cache-Control": [
+            "max-age=0"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Length": [
+            "596"
+          ],
+          "Content-Type": [
+            "application/json;charset=utf-8"
+          ],
+          "Date": [
+            "Wed, 04 Sep 2019 11:44:28 GMT"
+          ],
+          "Expires": [
+            "Wed, 04 Sep 2019 11:44:28 GMT"
+          ],
+          "Server": [
+            "nginx"
+          ],
+          "X-Request-ID": [
+            "0687b8c0-c1cf-4a66-b132-c2634d49be21"
+          ],
+          "X-Robots-Tag": [
+            "noindex"
+          ],
+          "X-Stubhub-International-dye": [
+            "fd72fbae-5583-4aeb-bcad-4a38c952dc48"
+          ],
+          "X-ticketbis-Media-Type": [
+            "application/json"
+          ],
+          "X-ticketbis-message": [
+            "Details for the schema resource"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://buscaticket.com.qa2.sh-env.net/api/schemas/1"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.8.1"
+}

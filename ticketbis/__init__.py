@@ -45,7 +45,6 @@ try:
     import requests
 
     from six.moves.urllib import parse
-    from six.moves import xrange
     import six
 
     # Monkey patch to requests' json using ujson when available;
@@ -168,6 +167,7 @@ class Ticketbis(object):
         grant_type=AUTH_CODE_GRANT_TYPE,
         api_endpoint=API_ENDPOINT,
         auth=None,
+        session=None,
     ):
         """Sets up the api object"""
         self.oauth = self.OAuth(
@@ -183,6 +183,7 @@ class Ticketbis(object):
             site,
             lang,
             auth,
+            session,
         )
 
         # Dynamically enable endpoints
@@ -303,6 +304,7 @@ class Ticketbis(object):
             site=None,
             lang=None,
             auth=None,
+            session=None,
         ):
             """Set up the API object"""
             self.client_id = client_id
@@ -329,6 +331,8 @@ class Ticketbis(object):
                 "Content-Type": "application/json",
             }
 
+            self.session = session or requests.Session()
+
         def set_token(self, access_token):
             """Set the OAuth token for this requester"""
             self.oauth_token = access_token
@@ -345,7 +349,13 @@ class Ticketbis(object):
             params = self._enrich_params(params)
             url = self._get_url(path)
 
-            result = _get(url, headers=headers, params=params, auth=self.auth)
+            result = _get(
+                url,
+                headers=headers,
+                params=params,
+                auth=self.auth,
+                session=self.session,
+            )
             self._set_header_properties(result)
 
             return result["data"]
@@ -360,7 +370,13 @@ class Ticketbis(object):
 
             pending_pages = True
             while pending_pages:
-                result = _get(url, headers=headers, params=params, auth=self.auth)
+                result = _get(
+                    url,
+                    headers=headers,
+                    params=params,
+                    auth=self.auth,
+                    session=self.session,
+                )
                 self._set_header_properties(result)
                 pending_pages = (
                     self.page_offset + len(result["data"]) < self.total_count
@@ -402,7 +418,12 @@ class Ticketbis(object):
             data = self._enrich_params(data)
             url = self._get_url(path)
             result = _post(
-                url, headers=headers, data=json.dumps(data), files=files, auth=self.auth
+                url,
+                headers=headers,
+                data=json.dumps(data),
+                files=files,
+                auth=self.auth,
+                session=self.session,
             )
             self.rate_limit = result["headers"].get("X-RateLimit-Limit", None)
             self.rate_remaining = result["headers"].get("X-RateLimit-Remaining", None)
@@ -418,7 +439,12 @@ class Ticketbis(object):
             data = self._enrich_params(data)
             url = self._get_url(path)
             result = _put(
-                url, headers=headers, data=json.dumps(data), files=files, auth=self.auth
+                url,
+                headers=headers,
+                data=json.dumps(data),
+                files=files,
+                auth=self.auth,
+                session=self.session,
             )
             self.rate_limit = result["headers"].get("X-RateLimit-Limit", None)
             self.rate_remaining = result["headers"].get("X-RateLimit-Remaining", None)
@@ -440,8 +466,8 @@ class Ticketbis(object):
             """Get the headers we need"""
             headers = self.base_headers.copy()
 
-            if not self.userless:
-                headers["Authorization"] = "Bearer {0}".format(self.oauth_token)
+            if not self.userless:  # FIXME
+                headers["Authorization"] = "Basic {0}".format(self.oauth_token)
             if self.site:
                 headers["X-ticketbis-site"] = self.site
             elif self.lang:
@@ -630,13 +656,13 @@ def _log_and_raise_exception(msg, data, cls=TicketbisException):
 #: Network helper functions
 
 
-def _get(url, headers={}, params=None, auth=None):
+def _get(url, headers={}, params=None, auth=None, session=requests):
     """Try to GET data from an endpoint using retries"""
     param_string = _ticketbis_urlencode(params)
-    for i in xrange(NUM_REQUEST_RETRIES):
+    for i in range(NUM_REQUEST_RETRIES):
         try:
             try:
-                response = requests.get(
+                response = session.get(
                     url,
                     headers=headers,
                     params=param_string,
@@ -662,10 +688,10 @@ def _get(url, headers={}, params=None, auth=None):
         time.sleep(1)
 
 
-def _post(url, headers={}, data=None, files=None, auth=None):
+def _post(url, headers={}, data=None, files=None, auth=None, session=requests):
     """Try to POST data to an endpoint"""
     try:
-        response = requests.post(
+        response = session.post(
             url, headers=headers, data=data, files=files, verify=VERIFY_SSL, auth=auth
         )
         return _process_response(response)
@@ -673,10 +699,10 @@ def _post(url, headers={}, data=None, files=None, auth=None):
         _log_and_raise_exception("Error connecting with ticketbis API", e)
 
 
-def _put(url, headers={}, data=None, files=None, auth=None):
+def _put(url, headers={}, data=None, files=None, auth=None, session=requests):
     """Try to PUT data to an endpoint"""
     try:
-        response = requests.put(
+        response = session.put(
             url, headers=headers, data=data, files=files, verify=VERIFY_SSL, auth=auth
         )
         return _process_response(response)

@@ -1,0 +1,100 @@
+{
+  "http_interactions": [
+    {
+      "recorded_at": "2019-09-04T11:44:02",
+      "request": {
+        "body": {
+          "encoding": "utf-8",
+          "string": ""
+        },
+        "headers": {
+          "Accept": [
+            "application/vnd.ticketbis.v1+json, application/json"
+          ],
+          "Authorization": [
+            "Basic <AUTH_TOKEN>"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Type": [
+            "application/json"
+          ],
+          "User-Agent": [
+            "python-requests/2.22.0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ]
+        },
+        "method": "GET",
+        "uri": "https://buscaticket.com.qa2.sh-env.net/api/categories?max=2&offset=0"
+      },
+      "response": {
+        "body": {
+          "encoding": "utf-8",
+          "string": "[{\"id\":1,\"name\":\"Deportes\",\"depth\":1,\"url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-deportes/ca1\",\"events_count\":23976,\"entity_type\":\"CATEGORY\",\"title\":\"Entradas Deportes | StubHub Espa\u00f1a\",\"leaf\":false,\"image\":\"http://s3-eu-west-1.amazonaws.com/tb-qa2-statics/categoria/1.jpg\",\"ticketbis_only\":false,\"sh_image\":{\"resource_url\":\"https://ssli.ebayimg.com/images/g/~c8AAOSwujBZyoUS/\",\"guid\":\"~c8AAOSwujBZyoUS\",\"author\":\"Getty\",\"cdn_url\":\"https://ssli.ebayimg.com/images/g\"}},{\"id\":2,\"name\":\"M\u00fasica\",\"depth\":1,\"url\":\"https://intl.stubhub.es.qa2.sh-env.net/entradas-musica/ca2\",\"events_count\":39394,\"entity_type\":\"CATEGORY\",\"title\":\"Entradas M\u00fasica | StubHub Espa\u00f1a\",\"leaf\":false,\"image\":\"http://s3-eu-west-1.amazonaws.com/tb-qa2-statics/categoria/2.jpg\",\"ticketbis_only\":false}]"
+        },
+        "headers": {
+          "Access-Control-Allow-Origin": [
+            "*"
+          ],
+          "Cache-Control": [
+            "max-age=0"
+          ],
+          "Connection": [
+            "keep-alive"
+          ],
+          "Content-Length": [
+            "786"
+          ],
+          "Content-Type": [
+            "application/json;charset=utf-8"
+          ],
+          "Date": [
+            "Wed, 04 Sep 2019 11:44:02 GMT"
+          ],
+          "Expires": [
+            "Wed, 04 Sep 2019 11:44:02 GMT"
+          ],
+          "Server": [
+            "nginx"
+          ],
+          "X-Request-ID": [
+            "8d7d04dc-baae-4381-a1ff-fe67681f8d5d"
+          ],
+          "X-Robots-Tag": [
+            "noindex"
+          ],
+          "X-Stubhub-International-dye": [
+            "78953e91-10cb-4aa9-aa1b-37aa83a5343d"
+          ],
+          "X-ticketbis-Media-Type": [
+            "application/json"
+          ],
+          "X-ticketbis-message": [
+            "List of Category resources"
+          ],
+          "X-ticketbis-pageMaxSize": [
+            "2"
+          ],
+          "X-ticketbis-pageOffset": [
+            "0"
+          ],
+          "X-ticketbis-site": [
+            "ticketbisES"
+          ],
+          "X-ticketbis-totalCount": [
+            "76176"
+          ]
+        },
+        "status": {
+          "code": 200,
+          "message": "OK"
+        },
+        "url": "https://buscaticket.com.qa2.sh-env.net/api/categories?max=2&offset=0"
+      }
+    }
+  ],
+  "recorded_with": "betamax/0.8.1"
+}
