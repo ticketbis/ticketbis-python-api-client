@@ -1,5 +1,9 @@
 # Ticketbis
 
+[![Build Status](https://travis-ci.org/ticketbis/ticketbis-python-api-client.svg?branch=master)](https://travis-ci.org/ticketbis/ticketbis-python-api-client)
+
+[![Coverage Status](https://coveralls.io/repos/github/ticketbis/ticketbis-python-api-client/badge.svg?branch=master)](https://coveralls.io/github/ticketbis/ticketbis-python-api-client?branch=master)
+
 Python wrapper for the [Ticketbis API](http://api.ticketbis.com).
 
 NOTE: This document is a *work in progress*.
@@ -26,7 +30,7 @@ or
 
 Depending upon your system and virtualenv settings, these may require sudo permissions.
 
-[PyPi page](https://pypi.python.org/pypi/ticketbis)
+[PyPi page](https://pypi.org/project/ticketbis/)
 
 ## Usage
 
@@ -175,5 +179,5 @@ In order to run the tests:
 * Run `python setup.py test`
 
 ## License
-MIT License. See LICENSE
-Copyright (c) 2015 Ticketbis
+Apache License Version 2.0. See the LICENSE file.
+Copyright (c) 2015-2019 Ticketbis
