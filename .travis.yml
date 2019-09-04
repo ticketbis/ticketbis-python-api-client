@@ -37,7 +37,7 @@ install:
 
 script:
   - check-manifest --ignore=tests
-  - pre-commit run -a
+  - if [[ $TRAVIS_PYTHON_VERSION != "2.7" ]]; then pre-commit run -a; fi
   - python setup.py test
 
 after_success:
